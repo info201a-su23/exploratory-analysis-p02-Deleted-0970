@@ -1,19 +1,21 @@
 ---
 title: "Exploratory Analysis"
+author: "Drew King, Derek J Liu, Sierra Briscoe, Alicia Lee"
 output: html_document
 ---
 
-## Project title
-
-Give your project a concise, interesting title that summarizes the entirety of your project
+## The State of Our Climate
 
 ### Authors
 
-Names of your team members
+* Drew King [kingdrew@uw.edu](mailto:kingdrew@uw.edu)
+* Derek J Liu [deliu@uw.edu](mailto:deliu@uw.edu)
+* Sierra Briscoe [sierrak9@uw.edu](mailto:sierrak9@uw.edu)
+* Alicia Lee [leeee@uw.edu](mailto:leeee@uw.edu)
 
 ### Date
 
-Winter 2022
+Summer 2023
 
 ### Abstract
 
@@ -30,18 +32,51 @@ Briefly introduce your project.  Include 3-5 research questions. What motivates 
 
 ### Related Work  
 
-Describe your topic and related work in this space. You must include 3 citations to related work (URLs to similar work, high quality articles from the popular press, research papers, etc. ) Please use a standard citation style of your choice. (at least 200 words)
+* The topic under investigation pertains to the temporal rate of climate temperature change. Given the contentious nature of climate change, a plethora of 'information' on its effects and causes exists. Accessing reliable sources such as academic journals or the platforms of esteemed scientific organizations like the UN, NOAA, or NASA is recommended.
+
+* The **UN**, (citation needed) provides a ‘[Climate Action Note](https://www.unep.org/explore-topics/climate-action/what-we-do/climate-action-note/state-of-climate.html)’, which provides data maps on the increase of emissions since 1990. This data set provides interactive data maps on climate change per total emissions and capita emissions, by country. What is most interesting about this particular data set is that they provide economic data on the countries contributing to climate change as well. This is beneficial in understanding the very real economic disparities between countries, and how that affects carbon emissions. For example, by analyzing the economic welfare of each individual country in the data set, the UN found that the poorest countries only make up half of carbon emissions. The top 1% of the globe represents more than twice these emissions. This information is useful in understanding how to disseminate resources and support to countries in need.
+
+* The **NOAA**, (citation needed) provides a '[Global Climate Dashboard](https://www.climate.gov/climatedashboard)', which provides 18 different line graphs ranging from Greenhouse Gases, Sea Level, and Surface Temperature to Ocean Heat, Spring Snow, and sunlight by metric. There are two indicator options, filtered between ‘climate change’ and ‘natural variability’ which increases the confidence in correlation between the state of the climate crisis which accelerated at a rate that went beyond what was natural for that particular time period or environment.
+
+* **NASA**, (citation needed) provides data on the '[Vital Signs of our Planet](https://climate.nasa.gov/)', the data provides information on Carbon Dioxide (parts per million), Global Temperature (degrees in celsius since the pre industrial period), Methane (parts per billion), Arctic Sea Ice Extent (min percent per decade since ‘79), Ice sheets(by billion metric ton per year), Sea Level (inches since 1993), and Ocean Warming (zetta-joules since 1955). By extracting these indicators, NASA provides a closer look at the different natural elements that are affected, and how drastically they have changed over time. When opened, each dataset provides either a trend-line graph, a regular line graph, or a temporal world map that is interactive.
+
+* All of these articles provide additional supporting data and impact to the questions we are trying to answer, but more than that, they are all coming from major scientific organizations that are credible, reliable, and actively involved in providing systemic solutions to the climate crisis. The goal of this project is to create data visualizations which contribute to the accessibility of climate data information, in a way that is readable and understandable to an audience.
+
 
 ### The Dataset
 
-Where did you find the data? Please include a link to the data source  
-Who collected the data?  
-How was the data collected or generated?  
-Why was the data collected?  
-How many observations (rows) are in your data?  
-How many features (columns) are in the data?  
-What, if any, ethical questions or questions of power do you need to consider when working with this data?  
-What are possible limitations or problems with this data?   (at least 200 words)
+* Dataset biography:
+
+  * This data was found on Kaggle. The data set can be found here: [Climate Change Data Set](https://www.kaggle.com/datasets/berkeleyearth/climate-change-earth-surface-temperature-data?select=GlobalTemperatures.csv)
+
+  * The data was collected by [Berkeley Earth](https://berkeleyearth.org/data/) and [Kristen Sissener](https://www.linkedin.com/in/kristensissener/)
+
+* Data collection methodology:
+
+  * There are several different ways this data was collected because the data dates all the way back to 1750, it is difficult to have consistent measurement. Early periods of temperature data were gathered using mercury thermometers, post 1940’s construction moved weather stations around, and the 1980’s introduced a device known to have a cooling bias; digital thermometers. There were 16 different data archives with a whopping 1.6 billion individual temperature records reported. Berkeley Earth divided the data into categories based on min, max, confidence intervals, global scale, by specific location, and by date.
+
+  * This data was collected to identify location indicators affecting climate temperature change over time. Authors Berkeley Earth and Kristen Sissener acknowledge the ongoing debate on whether climate change is a real issue, and collected this wide range of temporal data by location in order to represent a seemingly unbiased data set for analysis. By providing data based on location rather than population per capita, the data eradicates any room for socioeconomic debate and only provides space to analyze the correlation between date and location in temporal history.
+
+* Dimensions of dataset
+  * The global data has `3192` rows.
+  * The data by country has `577462` rows.
+  * The data by city has `8599212` rows.
+  * The global data has `9` columns.
+  * The data by country has `4` columns.
+  * The data by city has `7` columns.
+
+* Some ethical questions considered when working with this data include...
+
+  * Is the data representative of the global population?
+
+    * Considering that there is no information on each individual place across the world, the data will not provide very high confidence of causation or correlation between environmental placement and its impact. In order to do so, there would need to be granular data provided for each and every individual city, state, and country worldwide. Knowing that this data set spans across such a large amount of time, it is fair to assume this would not be a possibility to provide, however the ethical dilemma of representation within the dataset still very much stands.
+
+  * Does the data have a motive or an agenda behind it?
+  
+    * Knowing that climate change is not just a scientific problem, but also a highly politicized issue forces the consideration of integrity behind the data collection. What is being left out? How do the indicators selected create gaps in our data set? Are these gaps intentional or causal? It is important to consider these questions when approaching these data sets in order to consider the marginalized groups. Because we know that the poorest countries in the world lack resources that would provide them with environmental preservation efforts, it would be unethical to assume the baseline for each country remains the same.
+
+* It is important to consider that this data set has some limitations; the data dates back to 1750, all the way up to 2017. While this is a large dataset, it isn’t necessarily the most updated representation of the climate today since it excludes the previous six years of data. Therefore a trend-line for future predictions may be helpful to use and compare with current temperatures for accuracy. This dataset also lacks granular data for all surface locations on the globe, another limitation of this dataset. The missing data is notable because it inhibits the accuracy of the data representation.
+
 
 ### Implications
 
@@ -60,6 +95,9 @@ Include a table of aggregate information
 
 Describe why you included the table and what information it reveals
 
+``````{r, echo = FALSE, code = readLines("summary.R")}
+```
+
 ### Chart 1
 
 Include a chart
@@ -68,7 +106,7 @@ Describe why you chose this chart and what information it reveals
 
 Here's an example of how to run an R script inside an RMarkdown file:
 
-``````{r, echo = FALSE, code = readLines("chart1_example.R")}
+``````{r, echo = FALSE, code = readLines("chart1.R")}
 ```
 
 ### Chart 2
@@ -77,8 +115,22 @@ Include a chart
 
 Describe why you chose this chart and what information it reveals
 
+``````{r, echo = FALSE, code = readLines("chart2.R")}
+```
+
 ### Chart 3
 
 Include a chart
 
 Describe why you chose this chart and what information it reveals
+
+``````{r, echo = FALSE, code = readLines("chart3.R")}
+```
+
+### Citations
+
+Benjamin, A. (2023, January 16). _Climate Action - UN. Climate Action: What We Do._ Retrieved July 26, 2023, from [https://www.unep.org/explore-topics/climate-action/what-we-do/climate-action-note/state-of-climate.html?gclid=Cj0KCQjwiIOmBhDjARIsAP6YhSW-htOedd08vlz5LUT105nJ-_fRdkCJfswUJCBBTe8c4fdD_amOjzkaAkGWEALw_wcB](https://www.unep.org/explore-topics/climate-action/what-we-do/climate-action-note/state-of-climate.html?gclid=Cj0KCQjwiIOmBhDjARIsAP6YhSW-htOedd08vlz5LUT105nJ-_fRdkCJfswUJCBBTe8c4fdD_amOjzkaAkGWEALw_wcB)
+
+_Climate Change: Vital Signs of the Planet._ (n.d.). Home. Retrieved July 26, 2023, from [https://climate.nasa.gov](https://climate.nasa.gov)
+
+(NOAA): _Global Climate Dashboard | NOAA Climate.gov._ (n.d.). Climate.gov. Retrieved July 26, 2023, from [https://www.climate.gov/climatedashboard](https://www.climate.gov/climatedashboard)
