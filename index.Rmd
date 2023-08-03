@@ -69,7 +69,8 @@ Data collection methodology:
 
 Dimensions of dataset
 ```{r, echo = FALSE, message = FALSE, warning = FALSE}
-source("analysis.R")
+source("analysis.R", local = knitr::knit_global())
+library(knitr)
 dim_table <- get_dim()
 knitr::kable(dim_table)
 ```
@@ -119,10 +120,11 @@ We found:
 
 This table is included to give a more detailed understanding of our global data summary statistics, this table includes average land and sea temperatures as well as the confidence interval for each calculation.
 
-``````{r, echo = FALSE, message = FALSE, warning = FALSE, include = FALSE}
+``````{r, echo = FALSE, message = FALSE, warning = FALSE}
 source("analysis.R", local = knitr::knit_global())
+library(knitr)
 global_summary_table <- global_annual_summary()
-kable(global_summary_table)
+knitr::kable(global_summary_table)
 ```
 
 ### Chart 1
