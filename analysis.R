@@ -95,10 +95,8 @@ reframe_by_event_type <- function(climate_data){
 # Questions to answer:
 # 1: How much have global land temperatures changed since 1750?
 global_temp_change <- function(start_year = 1750, end_year = 2015){
-  temps <- annual_global_temp %>%
-    filter(dt == start_year | dt == end_year)
-  
-  temp_change <- temps %>%
+  temp_change <- annual_global_temp %>%
+    filter(dt == start_year | dt == end_year) %>%
     mutate_all(~ifelse(is.na(.), 0, .)) %>%
     summarize(
       dt = paste(start_year, "-", end_year),
@@ -124,8 +122,9 @@ global_temp_change <- function(start_year = 1750, end_year = 2015){
 
 # 2: What are the min and max values in the global data-set?
 # 2.1: When the hottest average year globally since 1750 and how hot was it?
-global_max_avg_temp <- function(){
+global_max_avg_temp <- function(start_year = 1750, end_year = 2015){
   hottest_year <- annual_global_temp %>%
+    filter(dt >= start_year & dt <= end_year) %>%
     filter(LandAverageTemperature == max(
       LandAverageTemperature, 
       na.rm = TRUE)) %>%
@@ -135,8 +134,9 @@ global_max_avg_temp <- function(){
 }
 
 # 2.2: When the coolest average year globally since 1750 and how hot was it?
-global_min_avg_temp <- function(){
+global_min_avg_temp <- function(start_year = 1750, end_year = 2015){
   coldest_year <- annual_global_temp %>%
+    filter(dt >= start_year & dt <= end_year) %>%
     filter(LandAverageTemperature == min(
       LandAverageTemperature, 
       na.rm = TRUE)) %>%
@@ -146,8 +146,9 @@ global_min_avg_temp <- function(){
 }
 
 # 2.3: When is the median average year globally since 1750 and how hot was it?
-global_med_avg_temp <- function(){
+global_med_avg_temp <- function(start_year = 1750, end_year = 2015){
   median_year <- annual_global_temp %>%
+    filter(dt >= start_year & dt <= end_year) %>%
     arrange(desc(LandAverageTemperature)) 
   
   midpoint_index <- ceiling(nrow(median_year) / 2)
@@ -159,12 +160,12 @@ global_med_avg_temp <- function(){
   return(median_year)
 }
 
-# 2.3: Create a table of data from questions 1 and 2
-global_annual_summary <- function(){
-  max <- global_max_avg_temp()
-  min <- global_min_avg_temp()
-  med <- global_med_avg_temp()
-  chg <- global_temp_change()
+# 2.4: Create a table of data from questions 1 and 2
+global_annual_summary <- function(start_year = 1750, end_year = 2015){
+  max <- global_max_avg_temp(start_year, end_year)
+  min <- global_min_avg_temp(start_year, end_year)
+  med <- global_med_avg_temp(start_year, end_year)
+  chg <- global_temp_change(start_year, end_year)
   
   summary_tbl <- max %>% 
     full_join(med) %>%
