@@ -367,6 +367,16 @@ city_temp_change <- function(start_year = 1850, end_year = 2013){
 
 # 6: What are the min and max values in the city data-set?
 # 6.1: What is the hottest average day since 1850 by city?
+city_max_avg_temp <- function(start_year = 1850, end_year = 2013){
+  temp_max <- annual_city_temp %>%
+    filter(dt %in% c(start_year: end_year)) %>%
+    arrange(dt) %>%
+    group_by(Country, City) %>%
+    filter(AverageTemperature == max(AverageTemperature, na.rm = TRUE)) %>%
+    mutate(event_type = "max_avg_temp") %>%
+    reframe_by_city_event_type()
+  return(temp_max)
+}
 
 # 6.2: What is the coldest average year per city since 1850?
 
