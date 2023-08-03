@@ -75,6 +75,23 @@ get_col_str <- function(){
   )
 }
 
+# Helper functions:
+reframe_by_event_type <- function(climate_data){
+  climate_data <- climate_data %>%
+    reframe(dt,
+            event_type,
+            LandAverageTemperature,
+            LandAverageTemperatureUncertainty,
+            LandMaxTemperature,
+            LandMaxTemperatureUncertainty,
+            LandMinTemperature,
+            LandMinTemperatureUncertainty,
+            LandAndOceanAverageTemperature,
+            LandAndOceanAverageTemperatureUncertainty
+    )
+  return(climate_data)
+}
+
 # Questions to answer:
 # 1: How much have global land temperatures changed since 1750?
 global_temp_change <- function(start_year = 1750, end_year = 2015){
@@ -101,17 +118,7 @@ global_temp_change <- function(start_year = 1750, end_year = 2015){
         LandAndOceanAverageTemperatureUncertainty, lag = 1),
     ) %>%
     mutate(event_type = "chg_avg_temp") %>%
-    reframe(dt,
-            event_type,
-            LandAverageTemperature,
-            LandAverageTemperatureUncertainty,
-            LandMaxTemperature,
-            LandMaxTemperatureUncertainty,
-            LandMinTemperature,
-            LandMinTemperatureUncertainty,
-            LandAndOceanAverageTemperature,
-            LandAndOceanAverageTemperatureUncertainty
-    )
+    reframe_by_event_type()
   return(temp_change)
 }
 
@@ -123,17 +130,7 @@ global_max_avg_temp <- function(){
       LandAverageTemperature, 
       na.rm = TRUE)) %>%
     mutate(event_type = "max_avg_temp") %>%
-    reframe(dt,
-            event_type,
-            LandAverageTemperature,
-            LandAverageTemperatureUncertainty,
-            LandMaxTemperature,
-            LandMaxTemperatureUncertainty,
-            LandMinTemperature,
-            LandMinTemperatureUncertainty,
-            LandAndOceanAverageTemperature,
-            LandAndOceanAverageTemperatureUncertainty
-    )
+    reframe_by_event_type()
   return(hottest_year)
 }
 
@@ -144,17 +141,7 @@ global_min_avg_temp <- function(){
       LandAverageTemperature, 
       na.rm = TRUE)) %>%
     mutate(event_type = "min_avg_temp") %>%
-    reframe(dt,
-            event_type,
-            LandAverageTemperature,
-            LandAverageTemperatureUncertainty,
-            LandMaxTemperature,
-            LandMaxTemperatureUncertainty,
-            LandMinTemperature,
-            LandMinTemperatureUncertainty,
-            LandAndOceanAverageTemperature,
-            LandAndOceanAverageTemperatureUncertainty
-    )
+    reframe_by_event_type()
   return(coldest_year)
 }
 
@@ -168,17 +155,7 @@ global_med_avg_temp <- function(){
   median_year <- median_year %>%
     slice(midpoint_index) %>%
     mutate(event_type = "med_avg_temp") %>%
-    reframe(dt,
-            event_type,
-            LandAverageTemperature,
-            LandAverageTemperatureUncertainty,
-            LandMaxTemperature,
-            LandMaxTemperatureUncertainty,
-            LandMinTemperature,
-            LandMinTemperatureUncertainty,
-            LandAndOceanAverageTemperature,
-            LandAndOceanAverageTemperatureUncertainty
-            )
+    reframe_by_event_type()
   return(median_year)
 }
 
@@ -192,7 +169,8 @@ global_annual_summary <- function(){
   summary_tbl <- max %>% 
     full_join(med) %>%
     full_join(min) %>%
-    full_join(chg)
+    full_join(chg) %>%
+    arrange(dt)
   return(summary_tbl)
 }
 
