@@ -245,11 +245,28 @@ country_temp_change <- function(start_year = 1850, end_year = 2013){
 
 # 4: What are the min and max values in the country data-set?
 # 4.1: What is the hottest average day since 1850 by country? 
+global_max_avg_temp <- function(start_year = 1850, end_year = 2013){
+  temp_max <- annual_country_temp %>%
+    filter(dt %in% c(start_year: end_year)) %>%
+    arrange(dt) %>%
+    group_by(Country) %>%
+    filter(AverageTemperature == max(AverageTemperature, na.rm = TRUE)) %>%
+    mutate(event_type = "max_avg_temp") %>%
+    reframe_by_country_event_type()
+  return(temp_max)
+}
 
-
-# 4.2: When was it, where was it, and how hot was it?
-
-# 4.3: What is the coldest average day since 1750?
+# 4.2: What is the coldest average day since 1750?
+global_min_avg_temp <- function(start_year = 1850, end_year = 2013){
+  temp_min <- annual_country_temp %>%
+    filter(dt %in% c(start_year: end_year)) %>%
+    arrange(dt) %>%
+    group_by(Country) %>%
+    filter(AverageTemperature == min(AverageTemperature, na.rm = TRUE)) %>%
+    mutate(event_type = "min_avg_temp") %>%
+    reframe_by_country_event_type()
+  return(temp_min)
+}
 
 # 4.4: When was it, where was it, and how cool was it?
 
