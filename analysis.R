@@ -129,6 +129,17 @@ reframe_by_global_event_type <- function(climate_data){
   return(climate_data)
 }
 
+reframe_by_country_event_type <- function(climate_data){
+  climate_data <- climate_data %>%
+    reframe(dt,
+            Country,
+            event_type,
+            AverageTemperature,
+            AverageTemperatureUncertainty,
+    )
+  return(climate_data)
+}
+
 # Questions to answer:
 # 1: How much have global land temperatures changed since 1750?
 global_temp_change <- function(start_year = 1750, end_year = 2015){
@@ -150,7 +161,7 @@ global_temp_change <- function(start_year = 1750, end_year = 2015){
       LandAndOceanAverageTemperature = diff(
         LandAndOceanAverageTemperature, lag = 1),
       LandAndOceanAverageTemperatureUncertainty = diff(
-        LandAndOceanAverageTemperatureUncertainty, lag = 1),
+        LandAndOceanAverageTemperatureUncertainty, lag = 1)
     ) %>%
     mutate(event_type = "chg_avg_temp") %>%
     reframe_by_global_event_type()
@@ -212,14 +223,79 @@ global_annual_summary <- function(start_year = 1750, end_year = 2015){
   return(summary_tbl)
 }
 
-# 3: What are the min and max values in the country data-set?
-# 3.1: What is the hottest average day since 1750? 
+# 3: How much have land temperatures changed since 1850 by country?
+country_temp_change <- function(start_year = 1850, end_year = 2013){
+  temp_change <- annual_country_temp %>%
+    filter(dt %in% c(start_year, end_year)) %>%
+    arrange(dt) %>%
+    group_by(Country) %>%
+    mutate(
+      dt = paste(start_year, "-", end_year),
+      event_type = "chg_avg_temp",
+      AverageTemperature = ifelse(
+        all(!is.na(AverageTemperature)),
+        diff(AverageTemperature, lag = 1), NaN),
+      AverageTemperatureUncertainty = ifelse(
+        all(!is.na(AverageTemperatureUncertainty)),
+        diff(AverageTemperatureUncertainty, lag = 1), NaN)
+    ) %>%
+    reframe_by_country_event_type()
+  return(temp_change)
+}
 
-# 3.2: When was it, where was it, and how hot was it?
+# 4: What are the min and max values in the country data-set?
+# 4.1: What is the hottest average day since 1850 by country? 
+country_max_avg_temp <- function(start_year = 1850, end_year = 2013){
+  temp_max <- annual_country_temp %>%
+    filter(dt %in% c(start_year: end_year)) %>%
+    arrange(dt) %>%
+    group_by(Country) %>%
+    filter(AverageTemperature == max(AverageTemperature, na.rm = TRUE)) %>%
+    mutate(event_type = "max_avg_temp") %>%
+    reframe_by_country_event_type()
+  return(temp_max)
+}
 
-# 3.3: What is the coldest average day since 1750?
+# 4.2: What is the coldest average year per country since 1850?
+country_min_avg_temp <- function(start_year = 1850, end_year = 2013){
+  temp_min <- annual_country_temp %>%
+    filter(dt %in% c(start_year: end_year)) %>%
+    arrange(dt) %>%
+    group_by(Country) %>%
+    filter(AverageTemperature == min(AverageTemperature, na.rm = TRUE)) %>%
+    mutate(event_type = "min_avg_temp") %>%
+    reframe_by_country_event_type()
+  return(temp_min)
+}
 
-# 3.4: When was it, where was it, and how cool was it?
+# 4.3: What is the mean temperature for each country since 1850?
+country_avg_temp <- function(start_year = 1850, end_year = 2013){
+  temp_change <- annual_country_temp %>%
+    filter(dt %in% c(start_year: end_year)) %>%
+    arrange(dt) %>%
+    group_by(Country) %>%
+    summarize(
+      dt = paste(start_year, "-", end_year),
+      event_type = "chg_avg_temp",
+      AverageTemperature = mean(AverageTemperature, na.rm = TRUE),
+      AverageTemperatureUncertainty = mean(AverageTemperatureUncertainty,
+                                           na.rm = TRUE)
+    ) %>%
+    reframe_by_country_event_type()
+  return(temp_change)
+}
 
-# 3.5: Create a table of this data
-
+# 4.4: Create a table of this data
+country_annual_summary <- function(start_year = 1850, end_year = 2013){
+  max <- country_max_avg_temp(start_year, end_year)
+  min <- country_min_avg_temp(start_year, end_year)
+  avg <- country_avg_temp(start_year, end_year)
+  chg <- country_temp_change(start_year, end_year)
+  
+  summary_tbl <- max %>% 
+    full_join(min) %>%
+    full_join(avg) %>%
+    full_join(chg) %>%
+    arrange(desc(dt))
+  return(summary_tbl)
+}

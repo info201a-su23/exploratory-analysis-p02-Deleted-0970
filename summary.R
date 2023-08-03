@@ -3,4 +3,5 @@ library(knitr)
 source("analysis.R")
 
 # Create a summary table here
-summary_table <- global_annual_summary()
+global_summary_table <- global_annual_summary()
+country_summary_table <= country_annual_summary()
