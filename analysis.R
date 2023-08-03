@@ -299,3 +299,14 @@ country_annual_summary <- function(start_year = 1850, end_year = 2013){
     arrange(desc(dt))
   return(summary_tbl)
 }
+
+# 5: How much have land temperatures changed since 1850 by city?
+
+# 6: What are the min and max values in the city data-set?
+# 6.1: What is the hottest average day since 1850 by city?
+
+# 6.2: What is the coldest average year per city since 1850?
+
+# 6.3: What is the mean temperature for each city since 1850?
+
+# 6.4: Create a table of this data
