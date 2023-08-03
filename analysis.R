@@ -83,9 +83,12 @@ country_temp_helper <- function(temp_data){
     mutate(dt = floor_date(dt, 'year')) %>%
     group_by(Country, dt) %>%
     summarise(
+      MaxAverageTemperature = max(AverageTemperature, na.rm = TRUE),
+      MinAverageTemperature = min(AverageTemperature, na.rm = TRUE),
       AverageTemperature = mean(AverageTemperature, na.rm = TRUE),
       AverageTemperatureUncertainty = mean(AverageTemperatureUncertainty,
-                                               na.rm = TRUE)) %>%
+                                               na.rm = TRUE)
+      ) %>%
     mutate(dt = format(dt, "%Y")) %>%
     mutate_all(~ifelse(is.nan(.), NA, .)) %>%
     mutate_all(~ifelse(is.infinite(.), NA, .))
@@ -99,12 +102,19 @@ city_temp_helper <- function(temp_data){
     summarise(
       City,
       Country,
+      MaxAverageTemperature = max(AverageTemperature, na.rm = TRUE),
+      MinAverageTemperature = min(AverageTemperature, na.rm = TRUE),
       AverageTemperature = mean(AverageTemperature, na.rm = TRUE),
       AverageTemperatureUncertainty = mean(AverageTemperatureUncertainty,
                                            na.rm = TRUE),
       Latitude,
       Longitude) %>%
-    distinct(Country, City, dt, .keep_all = TRUE)
+    distinct(Country, City, dt, .keep_all = TRUE) %>%
+    mutate(MaxAverageTemperature = ifelse(
+      is.infinite(MaxAverageTemperature), NA, MaxAverageTemperature),
+      MinAverageTemperature = ifelse(
+        is.infinite(MinAverageTemperature), NA, MinAverageTemperature)
+      )
   return(temp)
 }
 
@@ -130,6 +140,8 @@ reframe_by_country_event_type <- function(climate_data){
             Country,
             event_type,
             AverageTemperature,
+            MaxAverageTemperature,
+            MinAverageTemperature,
             AverageTemperatureUncertainty
     )
   return(climate_data)
@@ -142,6 +154,8 @@ reframe_by_city_event_type <- function(climate_data){
             City,
             event_type,
             AverageTemperature,
+            MaxAverageTemperature,
+            MinAverageTemperature,
             AverageTemperatureUncertainty,
             Latitude,
             Longitude
@@ -275,9 +289,15 @@ country_temp_change <- function(start_year = 1850, end_year = 2013){
     group_by(Country) %>%
     mutate(
       dt = paste(start_year, "-", end_year),
-      event_type = "chg_avg_temp",
+      event_type = "chg_temp",
       AverageTemperature = ifelse(
         all(!is.na(AverageTemperature)),
+        diff(AverageTemperature, lag = 1), NaN),
+      MaxAverageTemperature = ifelse(
+        all(!is.na(MaxAverageTemperature)),
+        diff(AverageTemperature, lag = 1), NaN),
+      MinAverageTemperature = ifelse(
+        all(!is.na(MinAverageTemperature)),
         diff(AverageTemperature, lag = 1), NaN),
       AverageTemperatureUncertainty = ifelse(
         all(!is.na(AverageTemperatureUncertainty)),
@@ -288,26 +308,27 @@ country_temp_change <- function(start_year = 1850, end_year = 2013){
 }
 
 # 4: What are the min and max values in the country data-set?
-# 4.1: What is the hottest average day since 1850 by country? 
+# 4.1: What is the hottest day since 1850 by country? 
 country_max_avg_temp <- function(start_year = 1850, end_year = 2013){
   temp_max <- annual_country_temp %>%
     filter(dt %in% c(start_year: end_year)) %>%
     arrange(dt) %>%
     group_by(Country) %>%
-    filter(AverageTemperature == max(AverageTemperature, na.rm = TRUE)) %>%
-    mutate(event_type = "max_avg_temp") %>%
+    filter(MaxAverageTemperature == max(
+      MaxAverageTemperature, na.rm = TRUE)) %>%
+    mutate(event_type = "max_temp") %>%
     reframe_by_country_event_type()
   return(temp_max)
 }
 
-# 4.2: What is the coldest average year per country since 1850?
+# 4.2: What is the coldest temperature each year per country since 1850?
 country_min_avg_temp <- function(start_year = 1850, end_year = 2013){
   temp_min <- annual_country_temp %>%
     filter(dt %in% c(start_year: end_year)) %>%
     arrange(dt) %>%
     group_by(Country) %>%
-    filter(AverageTemperature == min(AverageTemperature, na.rm = TRUE)) %>%
-    mutate(event_type = "min_avg_temp") %>%
+    filter(MinAverageTemperature == min(MinAverageTemperature, na.rm = TRUE)) %>%
+    mutate(event_type = "min_temp") %>%
     reframe_by_country_event_type()
   return(temp_min)
 }
@@ -320,10 +341,12 @@ country_avg_temp <- function(start_year = 1850, end_year = 2013){
     group_by(Country) %>%
     summarize(
       dt = paste(start_year, "-", end_year),
-      event_type = "chg_avg_temp",
+      event_type = "avg_temp",
       AverageTemperature = mean(AverageTemperature, na.rm = TRUE),
       AverageTemperatureUncertainty = mean(AverageTemperatureUncertainty,
-                                           na.rm = TRUE)
+                                           na.rm = TRUE),
+      MaxAverageTemperature = mean(MaxAverageTemperature, na.rm = TRUE),
+      MinAverageTemperature = mean(MinAverageTemperature, na.rm = TRUE)
     ) %>%
     reframe_by_country_event_type()
   return(temp_change)
@@ -352,9 +375,15 @@ city_temp_change <- function(start_year = 1850, end_year = 2013){
     group_by(Country, City) %>%
     mutate(
       dt = paste(start_year, "-", end_year),
-      event_type = "chg_avg_temp",
+      event_type = "chg_temp",
       AverageTemperature = ifelse(
         all(!is.na(AverageTemperature)),
+        diff(AverageTemperature, lag = 1), NaN),
+      MaxAverageTemperature = ifelse(
+        all(!is.na(MaxAverageTemperature)),
+        diff(AverageTemperature, lag = 1), NaN),
+      MinAverageTemperature = ifelse(
+        all(!is.na(MinAverageTemperature)),
         diff(AverageTemperature, lag = 1), NaN),
       AverageTemperatureUncertainty = ifelse(
         all(!is.na(AverageTemperatureUncertainty)),
@@ -366,14 +395,14 @@ city_temp_change <- function(start_year = 1850, end_year = 2013){
 }
 
 # 6: What are the min and max values in the city data-set?
-# 6.1: What is the hottest average day since 1850 by city?
+# 6.1: What is the hottest day since 1850 by city?
 city_max_avg_temp <- function(start_year = 1850, end_year = 2013){
   temp_max <- annual_city_temp %>%
     filter(dt %in% c(start_year: end_year)) %>%
     arrange(dt) %>%
     group_by(Country, City) %>%
-    filter(AverageTemperature == max(AverageTemperature, na.rm = TRUE)) %>%
-    mutate(event_type = "max_avg_temp") %>%
+    filter(MaxAverageTemperature == max(MaxAverageTemperature, na.rm = TRUE)) %>%
+    mutate(event_type = "max_temp") %>%
     reframe_by_city_event_type()
   return(temp_max)
 }
@@ -384,8 +413,8 @@ city_min_avg_temp <- function(start_year = 1850, end_year = 2013){
     filter(dt %in% c(start_year: end_year)) %>%
     arrange(dt) %>%
     group_by(Country, City) %>%
-    filter(AverageTemperature == min(AverageTemperature, na.rm = TRUE)) %>%
-    mutate(event_type = "min_avg_temp") %>%
+    filter(MinAverageTemperature == min(MinAverageTemperature, na.rm = TRUE)) %>%
+    mutate(event_type = "min_temp") %>%
     reframe_by_city_event_type()
   return(temp_min)
 }
@@ -398,10 +427,12 @@ city_avg_temp <- function(start_year = 1850, end_year = 2013){
     group_by(Country, City) %>%
     summarize(
       dt = paste(start_year, "-", end_year),
-      event_type = "chg_avg_temp",
+      event_type = "avg_temp",
       AverageTemperature = mean(AverageTemperature, na.rm = TRUE),
       AverageTemperatureUncertainty = mean(AverageTemperatureUncertainty,
                                            na.rm = TRUE),
+      MaxAverageTemperature = mean(MaxAverageTemperature, na.rm = TRUE),
+      MinAverageTemperature = mean(MinAverageTemperature, na.rm = TRUE),
       Latitude,
       Longitude
     ) %>%
