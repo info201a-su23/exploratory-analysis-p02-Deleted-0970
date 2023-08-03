@@ -1,9 +1,31 @@
 library(tidyverse)
+library(lubridate)
 
 # Read data into file
 global_temp <- read_csv("data/GlobalTemperatures.csv")
 country_temp <- read_csv("data/GlobalLandTemperaturesByCountry.csv")
 city_temp <- read_csv("data/GlobalLandTemperaturesByCity.csv")
+
+# Aggregate global data into annual data:
+annual_global_temp <- global_temp %>%
+  group_by(dt = floor_date(dt, 'year')) %>%
+  summarise(
+    LandAverageTemperature = mean(LandAverageTemperature, na.rm = TRUE),
+    LandAverageTemperatureUncertainty = mean(LandAverageTemperatureUncertainty,
+                                  na.rm = TRUE),
+    LandMaxTemperature = mean(LandMaxTemperature, na.rm = TRUE),
+    LandMaxTemperatureUncertainty = mean(LandMaxTemperatureUncertainty, 
+                                         na.rm = TRUE),
+    LandMinTemperature = mean(LandMinTemperature, na.rm = TRUE),
+    LandMinTemperatureUncertainty = mean(LandMinTemperatureUncertainty, 
+                                         na.rm = TRUE),
+    LandAndOceanAverageTemperature = mean(LandAndOceanAverageTemperature,
+                                          na.rm = TRUE),
+    LandAndOceanAverageTemperatureUncertainty = mean(
+      LandAndOceanAverageTemperatureUncertainty, na.rm = TRUE)
+    ) %>%
+  mutate(dt = format(dt, "%Y")) %>%
+  mutate_all(~ifelse(is.nan(.), NA, .))
 
 # Get dimensions
 get_dim <- function(){
@@ -56,37 +78,77 @@ get_col_str <- function(){
 # 1: How much have global land temperatures changed since 1750?
 global_temp_change <- function(){
   temps_1750 <- global_temp %>%
-    filter(substr(dt, 1, 4) == "1750") %>%
-    mutate(LandAverageTemperature = replace_na(LandAverageTemperature, 0))
+    filter(substr(dt, 1, 4) == "1750")
   temps_2015 <- global_temp %>%
-    filter(substr(dt, 1, 4) == "2015") %>%
-    mutate(LandAverageTemperature = replace_na(LandAverageTemperature, 0))
+    filter(substr(dt, 1, 4) == "2015")
   
   temp_change <- mean(
-    temps_2015$LandAverageTemperature
+    temps_2015$LandAverageTemperature, na.rm = TRUE
     ) - mean(
-      temps_1750$LandAverageTemperature
+      temps_1750$LandAverageTemperature, na.rm = TRUE
       )
   return(temp_change)
 }
 
 # 2: What are the min and max values in the global data-set?
-# 2.1: What is the hottest day globally since 1750? 
+# 2.1: When the hottest average year globally since 1750 and how hot was it?
+global_max_avg_temp <- function(){
+  hottest_year <- annual_global_temp %>%
+    filter(LandAverageTemperature == max(
+      LandAverageTemperature, 
+      na.rm = TRUE)) %>%
+    mutate(event_type = "max_avg_temp") %>%
+    reframe(dt, event_type, LandAverageTemperature)
+  return(hottest_year)
+}
 
-# 2.2: When was it and how hot was it?
+# 2.2: When the coolest average year globally since 1750 and how hot was it?
+global_min_avg_temp <- function(){
+  coldest_year <- annual_global_temp %>%
+    filter(LandAverageTemperature == min(
+      LandAverageTemperature, 
+      na.rm = TRUE)) %>%
+    mutate(event_type = "min_avg_temp") %>%
+    reframe(dt, event_type, LandAverageTemperature)
+  return(coldest_year)
+}
 
-# 2.3: What is the coldest day globally since 1750?
+# 2.3: When is the median average year globally since 1750 and how hot was it?
+global_med_avg_temp <- function(){
+  median_year <- annual_global_temp %>%
+    arrange(desc(LandAverageTemperature)) 
+  
+  midpoint_index <- ceiling(nrow(median_year) / 2)
+  
+  median_year <- median_year %>%
+    slice(midpoint_index) %>%
+    mutate(event_type = "med_avg_temp") %>%
+    reframe(dt, event_type, LandAverageTemperature)
+  return(median_year)
+}
 
-# 2.4: When was it and how cool was it?
-
-# 2.5: Create a table of this data
+# 2.3: Create a table of data from questions 1 and 2
+global_annual_summary <- function(){
+  max <- global_max_avg_temp()
+  min <- global_min_avg_temp()
+  med <- global_med_avg_temp()
+  chg <- tibble(dt = NA,
+                event_type = "chg_avg_temp",
+                LandAverageTemperature = global_temp_change())
+  
+  summary_tbl <- max %>% 
+    full_join(med) %>%
+    full_join(min) %>%
+    full_join(chg)
+  return(summary_tbl)
+}
 
 # 3: What are the min and max values in the country data-set?
-# 3.1: What is the hottest day since 1750? 
+# 3.1: What is the hottest average day since 1750? 
 
 # 3.2: When was it, where was it, and how hot was it?
 
-# 3.3: What is the coldest day since 1750?
+# 3.3: What is the coldest average day since 1750?
 
 # 3.4: When was it, where was it, and how cool was it?
 
