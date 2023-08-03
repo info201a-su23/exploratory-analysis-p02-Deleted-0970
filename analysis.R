@@ -8,10 +8,7 @@ city_temp <- read_csv("data/GlobalLandTemperaturesByCity.csv")
 
 # Aggregate data into annual data:
 annual_global_temp <- annual_temp_helper(global_temp)
-annual_country_temp <- country_temp %>%
-  mutate(dt = floor_date(dt, 'year')) %>%
-  group_by(Country, dt) %>%
-  country_temp_helper()
+annual_country_temp <- country_temp_helper(country_temp)
 
 # Get dimensions
 get_dim <- function(){
@@ -87,6 +84,8 @@ annual_temp_helper <- function(temp_data){
 
 country_temp_helper <- function(temp_data){
   temp <- temp_data %>%
+    mutate(dt = floor_date(dt, 'year')) %>%
+    group_by(Country, dt) %>%
     summarise(
       AverageTemperature = mean(AverageTemperature, na.rm = TRUE),
       AverageTemperatureUncertainty = mean(AverageTemperatureUncertainty,
