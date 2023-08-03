@@ -77,17 +77,29 @@ get_col_str <- function(){
 
 # Questions to answer:
 # 1: How much have global land temperatures changed since 1750?
-global_temp_change <- function(){
-  temps_1750 <- global_temp %>%
-    filter(substr(dt, 1, 4) == "1750")
-  temps_2015 <- global_temp %>%
-    filter(substr(dt, 1, 4) == "2015")
+global_temp_change <- function(start_year = 1750, end_year = 2015){
+  temps <- annual_global_temp %>%
+    filter(dt == start_year | dt == end_year)
   
-  temp_change <- mean(
-    temps_2015$LandAverageTemperature, na.rm = TRUE
-    ) - mean(
-      temps_1750$LandAverageTemperature, na.rm = TRUE
-      )
+  temp_change <- temps %>%
+    mutate_all(~ifelse(is.na(.), 0, .)) %>%
+    summarize(
+      dt = paste(start_year, "-", end_year),
+      LandAverageTemperature = diff(
+        LandAverageTemperature, lag = 1),
+      LandAverageTemperatureUncertainty = diff(
+        LandAverageTemperatureUncertainty, lag = 1),
+      LandMaxTemperature = diff(LandMaxTemperature, lag = 1),
+      LandMaxTemperatureUncertainty = diff(
+        LandMaxTemperatureUncertainty, lag = 1),
+      LandMinTemperature = diff(LandMinTemperature, lag = 1),
+      LandMinTemperatureUncertainty = diff(
+        LandMinTemperatureUncertainty, lag = 1),
+      LandAndOceanAverageTemperature = diff(
+        LandAndOceanAverageTemperature, lag = 1),
+      LandAndOceanAverageTemperatureUncertainty = diff(
+        LandAndOceanAverageTemperatureUncertainty, lag = 1),
+    )
   return(temp_change)
 }
 
@@ -133,9 +145,9 @@ global_annual_summary <- function(){
   max <- global_max_avg_temp()
   min <- global_min_avg_temp()
   med <- global_med_avg_temp()
-  chg <- tibble(dt = NA,
-                event_type = "chg_avg_temp",
-                LandAverageTemperature = global_temp_change())
+  chg <- global_temp_change() %>%
+    mutate(event_type = "chg_avg_temp") %>%
+    reframe(dt, event_type, LandAverageTemperature)
   
   summary_tbl <- max %>% 
     full_join(med) %>%
