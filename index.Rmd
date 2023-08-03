@@ -119,8 +119,9 @@ We found:
 
 This table is included to give a more detailed understanding of our global data summary statistics, this table includes average land and sea temperatures as well as the confidence interval for each calculation.
 
-``````{r, echo = FALSE, message = FALSE, warning = FALSE}
-source("summary.R")
+``````{r, echo = FALSE, message = FALSE, warning = FALSE, include = FALSE}
+source("analysis.R", local = knitr::knit_global())
+global_summary_table <- global_annual_summary()
 kable(global_summary_table)
 ```
 
