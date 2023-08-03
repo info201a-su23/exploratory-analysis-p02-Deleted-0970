@@ -130,7 +130,21 @@ reframe_by_country_event_type <- function(climate_data){
             Country,
             event_type,
             AverageTemperature,
+            AverageTemperatureUncertainty
+    )
+  return(climate_data)
+}
+
+reframe_by_city_event_type <- function(climate_data){
+  climate_data <- climate_data %>%
+    reframe(dt,
+            Country,
+            City,
+            event_type,
+            AverageTemperature,
             AverageTemperatureUncertainty,
+            Latitude,
+            Longitude
     )
   return(climate_data)
 }
@@ -331,6 +345,25 @@ country_annual_summary <- function(start_year = 1850, end_year = 2013){
 }
 
 # 5: How much have land temperatures changed since 1850 by city?
+city_temp_change <- function(start_year = 1850, end_year = 2013){
+  temp_change <- annual_city_temp %>%
+    filter(dt %in% c(start_year, end_year)) %>%
+    arrange(dt) %>%
+    group_by(Country, City) %>%
+    mutate(
+      dt = paste(start_year, "-", end_year),
+      event_type = "chg_avg_temp",
+      AverageTemperature = ifelse(
+        all(!is.na(AverageTemperature)),
+        diff(AverageTemperature, lag = 1), NaN),
+      AverageTemperatureUncertainty = ifelse(
+        all(!is.na(AverageTemperatureUncertainty)),
+        diff(AverageTemperatureUncertainty, lag = 1), NaN)
+    ) %>%
+    distinct(Country, City, .keep_all = TRUE) %>%
+    reframe_by_city_event_type()
+  return(temp_change)
+}
 
 # 6: What are the min and max values in the city data-set?
 # 6.1: What is the hottest average day since 1850 by city?
