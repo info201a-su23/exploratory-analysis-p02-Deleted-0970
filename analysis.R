@@ -6,27 +6,12 @@ global_temp <- read_csv("data/GlobalTemperatures.csv")
 country_temp <- read_csv("data/GlobalLandTemperaturesByCountry.csv")
 city_temp <- read_csv("data/GlobalLandTemperaturesByCity.csv")
 
-# Aggregate global data into annual data:
-annual_global_temp <- global_temp %>%
-  group_by(dt = floor_date(dt, 'year')) %>%
-  summarise(
-    LandAverageTemperature = mean(LandAverageTemperature, na.rm = TRUE),
-    LandAverageTemperatureUncertainty = mean(LandAverageTemperatureUncertainty,
-                                  na.rm = TRUE),
-    LandMaxTemperature = max(LandMaxTemperature, na.rm = TRUE),
-    LandMaxTemperatureUncertainty = mean(LandMaxTemperatureUncertainty, 
-                                         na.rm = TRUE),
-    LandMinTemperature = min(LandMinTemperature, na.rm = TRUE),
-    LandMinTemperatureUncertainty = mean(LandMinTemperatureUncertainty, 
-                                         na.rm = TRUE),
-    LandAndOceanAverageTemperature = mean(LandAndOceanAverageTemperature,
-                                          na.rm = TRUE),
-    LandAndOceanAverageTemperatureUncertainty = mean(
-      LandAndOceanAverageTemperatureUncertainty, na.rm = TRUE)
-    ) %>%
-  mutate(dt = format(dt, "%Y")) %>%
-  mutate_all(~ifelse(is.nan(.), NA, .)) %>%
-  mutate_all(~ifelse(is.infinite(.), NA, .))
+# Aggregate data into annual data:
+annual_global_temp <- annual_temp_helper(global_temp)
+annual_country_temp <- country_temp %>%
+  mutate(dt = floor_date(dt, 'year')) %>%
+  group_by(Country, dt) %>%
+  country_temp_helper()
 
 # Get dimensions
 get_dim <- function(){
@@ -76,6 +61,42 @@ get_col_str <- function(){
 }
 
 # Helper functions:
+annual_temp_helper <- function(temp_data){
+  temp <- temp_data %>%
+    group_by(dt = floor_date(dt, 'year')) %>%
+    summarise(
+      LandAverageTemperature = mean(LandAverageTemperature, na.rm = TRUE),
+      LandAverageTemperatureUncertainty = mean(LandAverageTemperatureUncertainty,
+                                               na.rm = TRUE),
+      LandMaxTemperature = max(LandMaxTemperature, na.rm = TRUE),
+      LandMaxTemperatureUncertainty = mean(LandMaxTemperatureUncertainty, 
+                                           na.rm = TRUE),
+      LandMinTemperature = min(LandMinTemperature, na.rm = TRUE),
+      LandMinTemperatureUncertainty = mean(LandMinTemperatureUncertainty, 
+                                           na.rm = TRUE),
+      LandAndOceanAverageTemperature = mean(LandAndOceanAverageTemperature,
+                                            na.rm = TRUE),
+      LandAndOceanAverageTemperatureUncertainty = mean(
+        LandAndOceanAverageTemperatureUncertainty, na.rm = TRUE)
+    ) %>%
+    mutate(dt = format(dt, "%Y")) %>%
+    mutate_all(~ifelse(is.nan(.), NA, .)) %>%
+    mutate_all(~ifelse(is.infinite(.), NA, .))
+  return(temp)
+}
+
+country_temp_helper <- function(temp_data){
+  temp <- temp_data %>%
+    summarise(
+      AverageTemperature = mean(AverageTemperature, na.rm = TRUE),
+      AverageTemperatureUncertainty = mean(AverageTemperatureUncertainty,
+                                               na.rm = TRUE)) %>%
+    mutate(dt = format(dt, "%Y")) %>%
+    mutate_all(~ifelse(is.nan(.), NA, .)) %>%
+    mutate_all(~ifelse(is.infinite(.), NA, .))
+  return(temp)
+}
+
 reframe_by_global_event_type <- function(climate_data){
   climate_data <- climate_data %>%
     reframe(dt,
