@@ -76,7 +76,7 @@ get_col_str <- function(){
 }
 
 # Helper functions:
-reframe_by_event_type <- function(climate_data){
+reframe_by_global_event_type <- function(climate_data){
   climate_data <- climate_data %>%
     reframe(dt,
             event_type,
@@ -116,7 +116,7 @@ global_temp_change <- function(start_year = 1750, end_year = 2015){
         LandAndOceanAverageTemperatureUncertainty, lag = 1),
     ) %>%
     mutate(event_type = "chg_avg_temp") %>%
-    reframe_by_event_type()
+    reframe_by_global_event_type()
   return(temp_change)
 }
 
@@ -129,7 +129,7 @@ global_max_avg_temp <- function(start_year = 1750, end_year = 2015){
       LandAverageTemperature, 
       na.rm = TRUE)) %>%
     mutate(event_type = "max_avg_temp") %>%
-    reframe_by_event_type()
+    reframe_by_global_event_type()
   return(hottest_year)
 }
 
@@ -141,7 +141,7 @@ global_min_avg_temp <- function(start_year = 1750, end_year = 2015){
       LandAverageTemperature, 
       na.rm = TRUE)) %>%
     mutate(event_type = "min_avg_temp") %>%
-    reframe_by_event_type()
+    reframe_by_global_event_type()
   return(coldest_year)
 }
 
@@ -156,7 +156,7 @@ global_med_avg_temp <- function(start_year = 1750, end_year = 2015){
   median_year <- median_year %>%
     slice(midpoint_index) %>%
     mutate(event_type = "med_avg_temp") %>%
-    reframe_by_event_type()
+    reframe_by_global_event_type()
   return(median_year)
 }
 
