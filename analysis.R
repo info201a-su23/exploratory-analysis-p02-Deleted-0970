@@ -6,11 +6,6 @@ global_temp <- read_csv("data/GlobalTemperatures.csv")
 country_temp <- read_csv("data/GlobalLandTemperaturesByCountry.csv")
 city_temp <- read_csv("data/GlobalLandTemperaturesByCity.csv")
 
-# Aggregate data into annual data:
-annual_global_temp <- global_temp_helper(global_temp)
-annual_country_temp <- country_temp_helper(country_temp)
-annual_city_temp <- city_temp_helper(city_temp)
-
 # Get dimensions
 get_dim <- function(){
   # Number of rows:
@@ -140,6 +135,11 @@ reframe_by_country_event_type <- function(climate_data){
   return(climate_data)
 }
 
+# Aggregate data into annual data using helper functions:
+annual_global_temp <- global_temp_helper(global_temp)
+annual_country_temp <- country_temp_helper(country_temp)
+annual_city_temp <- city_temp_helper(city_temp)
+
 # Questions to answer:
 # 1: How much have global land temperatures changed since 1750?
 global_temp_change <- function(start_year = 1750, end_year = 2015){
@@ -208,17 +208,47 @@ global_med_avg_temp <- function(start_year = 1750, end_year = 2015){
   return(median_year)
 }
 
-# 2.4: Create a table of data from questions 1 and 2
+# 2.4: What is the average global temperature from 1750 to 2015?
+global_avg_temp <- function(start_year = 1750, end_year = 2015){
+  avg_temp <- annual_global_temp %>%
+    filter(dt >= start_year & dt <= end_year) %>%
+    summarise(
+      dt = paste(start_year, "-", end_year),
+      LandAverageTemperature = mean(
+        LandAverageTemperature, na.rm = TRUE),
+      LandAverageTemperatureUncertainty = mean(
+        LandAverageTemperatureUncertainty, na.rm = TRUE),
+      LandMaxTemperature = mean(
+        LandMaxTemperature, na.rm = TRUE),
+      LandMaxTemperatureUncertainty = mean(
+        LandMaxTemperatureUncertainty, na.rm = TRUE),
+      LandMinTemperature = mean(
+        LandMinTemperature, na.rm = TRUE),
+      LandMinTemperatureUncertainty = mean(
+        LandMinTemperatureUncertainty, na.rm = TRUE),
+      LandAndOceanAverageTemperature = mean(
+        LandAndOceanAverageTemperature, na.rm = TRUE),
+      LandAndOceanAverageTemperatureUncertainty = mean(
+        LandAndOceanAverageTemperatureUncertainty, na.rm = TRUE)
+      ) %>%
+    mutate(event_type = "avg_temp") %>%
+    reframe_by_global_event_type()
+  return(avg_temp)
+}
+
+# 2.5: Create a table of data from questions 1 and 2
 global_annual_summary <- function(start_year = 1750, end_year = 2015){
   max <- global_max_avg_temp(start_year, end_year)
   min <- global_min_avg_temp(start_year, end_year)
   med <- global_med_avg_temp(start_year, end_year)
   chg <- global_temp_change(start_year, end_year)
+  avg <- global_avg_temp(start_year, end_year)
   
-  summary_tbl <- max %>% 
+  summary_tbl <- chg %>% 
+    full_join(avg) %>%
     full_join(med) %>%
     full_join(min) %>%
-    full_join(chg) %>%
+    full_join(max) %>%
     arrange(dt)
   return(summary_tbl)
 }
@@ -299,3 +329,14 @@ country_annual_summary <- function(start_year = 1850, end_year = 2013){
     arrange(desc(dt))
   return(summary_tbl)
 }
+
+# 5: How much have land temperatures changed since 1850 by city?
+
+# 6: What are the min and max values in the city data-set?
+# 6.1: What is the hottest average day since 1850 by city?
+
+# 6.2: What is the coldest average year per city since 1850?
+
+# 6.3: What is the mean temperature for each city since 1850?
+
+# 6.4: Create a table of this data
