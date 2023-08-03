@@ -6,11 +6,6 @@ global_temp <- read_csv("data/GlobalTemperatures.csv")
 country_temp <- read_csv("data/GlobalLandTemperaturesByCountry.csv")
 city_temp <- read_csv("data/GlobalLandTemperaturesByCity.csv")
 
-# Aggregate data into annual data:
-annual_global_temp <- global_temp_helper(global_temp)
-annual_country_temp <- country_temp_helper(country_temp)
-annual_city_temp <- city_temp_helper(city_temp)
-
 # Get dimensions
 get_dim <- function(){
   # Number of rows:
@@ -139,6 +134,11 @@ reframe_by_country_event_type <- function(climate_data){
     )
   return(climate_data)
 }
+
+# Aggregate data into annual data using helper functions:
+annual_global_temp <- global_temp_helper(global_temp)
+annual_country_temp <- country_temp_helper(country_temp)
+annual_city_temp <- city_temp_helper(city_temp)
 
 # Questions to answer:
 # 1: How much have global land temperatures changed since 1750?
