@@ -1,9 +1,12 @@
-source("analysis.R")
-library(ggplot2)
+library(ggplot2) # create plots
+library(dplyr) # data wrangling
+library(scales) 
+library(maps)
+library(mapproj) # allows for coord_map() to prevent stretching
+library(readr) # allows for read_csv to create tibble
+options(scipen = 999) # removes scientific notation
 
-x_values <- seq(1, 3)
-y_values <- seq(1,3)
+filename <- paste0()
 
-ggplot() +
-  geom_point(aes(x=x_values, y = y_values))
+data <- read_csv(filename, stringsAsFactors = FALSE)
 
