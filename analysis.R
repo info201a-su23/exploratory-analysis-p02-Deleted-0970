@@ -130,7 +130,21 @@ reframe_by_country_event_type <- function(climate_data){
             Country,
             event_type,
             AverageTemperature,
+            AverageTemperatureUncertainty
+    )
+  return(climate_data)
+}
+
+reframe_by_city_event_type <- function(climate_data){
+  climate_data <- climate_data %>%
+    reframe(dt,
+            Country,
+            City,
+            event_type,
+            AverageTemperature,
             AverageTemperatureUncertainty,
+            Latitude,
+            Longitude
     )
   return(climate_data)
 }
@@ -331,12 +345,82 @@ country_annual_summary <- function(start_year = 1850, end_year = 2013){
 }
 
 # 5: How much have land temperatures changed since 1850 by city?
+city_temp_change <- function(start_year = 1850, end_year = 2013){
+  temp_change <- annual_city_temp %>%
+    filter(dt %in% c(start_year, end_year)) %>%
+    arrange(dt) %>%
+    group_by(Country, City) %>%
+    mutate(
+      dt = paste(start_year, "-", end_year),
+      event_type = "chg_avg_temp",
+      AverageTemperature = ifelse(
+        all(!is.na(AverageTemperature)),
+        diff(AverageTemperature, lag = 1), NaN),
+      AverageTemperatureUncertainty = ifelse(
+        all(!is.na(AverageTemperatureUncertainty)),
+        diff(AverageTemperatureUncertainty, lag = 1), NaN)
+    ) %>%
+    distinct(Country, City, .keep_all = TRUE) %>%
+    reframe_by_city_event_type()
+  return(temp_change)
+}
 
 # 6: What are the min and max values in the city data-set?
 # 6.1: What is the hottest average day since 1850 by city?
+city_max_avg_temp <- function(start_year = 1850, end_year = 2013){
+  temp_max <- annual_city_temp %>%
+    filter(dt %in% c(start_year: end_year)) %>%
+    arrange(dt) %>%
+    group_by(Country, City) %>%
+    filter(AverageTemperature == max(AverageTemperature, na.rm = TRUE)) %>%
+    mutate(event_type = "max_avg_temp") %>%
+    reframe_by_city_event_type()
+  return(temp_max)
+}
 
 # 6.2: What is the coldest average year per city since 1850?
+city_min_avg_temp <- function(start_year = 1850, end_year = 2013){
+  temp_min <- annual_city_temp %>%
+    filter(dt %in% c(start_year: end_year)) %>%
+    arrange(dt) %>%
+    group_by(Country, City) %>%
+    filter(AverageTemperature == min(AverageTemperature, na.rm = TRUE)) %>%
+    mutate(event_type = "min_avg_temp") %>%
+    reframe_by_city_event_type()
+  return(temp_min)
+}
 
 # 6.3: What is the mean temperature for each city since 1850?
+city_avg_temp <- function(start_year = 1850, end_year = 2013){
+  temp_change <- annual_city_temp %>%
+    filter(dt %in% c(start_year: end_year)) %>%
+    arrange(dt) %>%
+    group_by(Country, City) %>%
+    summarize(
+      dt = paste(start_year, "-", end_year),
+      event_type = "chg_avg_temp",
+      AverageTemperature = mean(AverageTemperature, na.rm = TRUE),
+      AverageTemperatureUncertainty = mean(AverageTemperatureUncertainty,
+                                           na.rm = TRUE),
+      Latitude,
+      Longitude
+    ) %>%
+    distinct(Country, City, .keep_all = TRUE) %>%
+    reframe_by_city_event_type()
+  return(temp_change)
+}
 
 # 6.4: Create a table of this data
+city_annual_summary <- function(start_year = 1850, end_year = 2013){
+  max <- city_max_avg_temp(start_year, end_year)
+  min <- city_min_avg_temp(start_year, end_year)
+  avg <- city_avg_temp(start_year, end_year)
+  chg <- city_temp_change(start_year, end_year)
+  
+  summary_tbl <- max %>% 
+    full_join(min) %>%
+    full_join(avg) %>%
+    full_join(chg) %>%
+    arrange(desc(dt))
+  return(summary_tbl)
+}
