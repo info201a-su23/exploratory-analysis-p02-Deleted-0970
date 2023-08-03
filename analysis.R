@@ -129,6 +129,17 @@ reframe_by_global_event_type <- function(climate_data){
   return(climate_data)
 }
 
+reframe_by_country_event_type <- function(climate_data){
+  climate_data <- climate_data %>%
+    reframe(dt,
+            Country,
+            event_type,
+            AverageTemperature,
+            AverageTemperatureUncertainty,
+    )
+  return(climate_data)
+}
+
 # Questions to answer:
 # 1: How much have global land temperatures changed since 1750?
 global_temp_change <- function(start_year = 1750, end_year = 2015){
@@ -150,7 +161,7 @@ global_temp_change <- function(start_year = 1750, end_year = 2015){
       LandAndOceanAverageTemperature = diff(
         LandAndOceanAverageTemperature, lag = 1),
       LandAndOceanAverageTemperatureUncertainty = diff(
-        LandAndOceanAverageTemperatureUncertainty, lag = 1),
+        LandAndOceanAverageTemperatureUncertainty, lag = 1)
     ) %>%
     mutate(event_type = "chg_avg_temp") %>%
     reframe_by_global_event_type()
@@ -212,14 +223,35 @@ global_annual_summary <- function(start_year = 1750, end_year = 2015){
   return(summary_tbl)
 }
 
-# 3: What are the min and max values in the country data-set?
-# 3.1: What is the hottest average day since 1750? 
+# 3: How much have land temperatures changed since 1850 by country?
+country_temp_change <- function(start_year = 1850, end_year = 2013){
+  temp_change <- annual_country_temp %>%
+    filter(dt %in% c(start_year, end_year)) %>%
+    arrange(dt) %>%
+    group_by(Country) %>%
+    mutate(
+      dt = paste(start_year, "-", end_year),
+      event_type = "chg_avg_temp",
+      AverageTemperature = ifelse(
+        all(!is.na(AverageTemperature)),
+        diff(AverageTemperature, lag = 1), NaN),
+      AverageTemperatureUncertainty = ifelse(
+        all(!is.na(AverageTemperatureUncertainty)),
+        diff(AverageTemperatureUncertainty, lag = 1), NaN)
+    ) %>%
+    reframe_by_country_event_type()
+  return(temp_change)
+}
 
-# 3.2: When was it, where was it, and how hot was it?
+# 4: What are the min and max values in the country data-set?
+# 4.1: What is the hottest average day since 1850 by country? 
 
-# 3.3: What is the coldest average day since 1750?
 
-# 3.4: When was it, where was it, and how cool was it?
+# 4.2: When was it, where was it, and how hot was it?
 
-# 3.5: Create a table of this data
+# 4.3: What is the coldest average day since 1750?
+
+# 4.4: When was it, where was it, and how cool was it?
+
+# 4.5: Create a table of this data
 
