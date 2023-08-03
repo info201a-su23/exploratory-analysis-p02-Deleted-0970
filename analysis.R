@@ -13,10 +13,10 @@ annual_global_temp <- global_temp %>%
     LandAverageTemperature = mean(LandAverageTemperature, na.rm = TRUE),
     LandAverageTemperatureUncertainty = mean(LandAverageTemperatureUncertainty,
                                   na.rm = TRUE),
-    LandMaxTemperature = mean(LandMaxTemperature, na.rm = TRUE),
+    LandMaxTemperature = max(LandMaxTemperature, na.rm = TRUE),
     LandMaxTemperatureUncertainty = mean(LandMaxTemperatureUncertainty, 
                                          na.rm = TRUE),
-    LandMinTemperature = mean(LandMinTemperature, na.rm = TRUE),
+    LandMinTemperature = min(LandMinTemperature, na.rm = TRUE),
     LandMinTemperatureUncertainty = mean(LandMinTemperatureUncertainty, 
                                          na.rm = TRUE),
     LandAndOceanAverageTemperature = mean(LandAndOceanAverageTemperature,
@@ -25,7 +25,8 @@ annual_global_temp <- global_temp %>%
       LandAndOceanAverageTemperatureUncertainty, na.rm = TRUE)
     ) %>%
   mutate(dt = format(dt, "%Y")) %>%
-  mutate_all(~ifelse(is.nan(.), NA, .))
+  mutate_all(~ifelse(is.nan(.), NA, .)) %>%
+  mutate_all(~ifelse(is.infinite(.), NA, .))
 
 # Get dimensions
 get_dim <- function(){
