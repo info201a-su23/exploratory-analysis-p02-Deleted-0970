@@ -379,6 +379,16 @@ city_max_avg_temp <- function(start_year = 1850, end_year = 2013){
 }
 
 # 6.2: What is the coldest average year per city since 1850?
+city_min_avg_temp <- function(start_year = 1850, end_year = 2013){
+  temp_min <- annual_city_temp %>%
+    filter(dt %in% c(start_year: end_year)) %>%
+    arrange(dt) %>%
+    group_by(Country, City) %>%
+    filter(AverageTemperature == min(AverageTemperature, na.rm = TRUE)) %>%
+    mutate(event_type = "min_avg_temp") %>%
+    reframe_by_city_event_type()
+  return(temp_min)
+}
 
 # 6.3: What is the mean temperature for each city since 1850?
 
