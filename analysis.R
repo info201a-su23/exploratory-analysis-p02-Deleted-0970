@@ -2,9 +2,9 @@ library(tidyverse)
 library(lubridate)
 
 # Read data into file
-global_temp <- read.csv("data/GlobalTemperatures.csv")
-country_temp <- read.csv("data/GlobalLandTemperaturesByCountry.csv")
-city_temp <- read.csv("data/GlobalLandTemperaturesByCity.csv")
+global_temp <- read_csv("data/GlobalTemperatures.csv")
+country_temp <- read_csv("data/GlobalLandTemperaturesByCountry.csv")
+city_temp <- read_csv("data/GlobalLandTemperaturesByCity.csv")
 
 # Aggregate global data into annual data:
 annual_global_temp <- global_temp %>%
