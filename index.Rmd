@@ -1,6 +1,7 @@
 ---
 title: "Exploratory Analysis"
 author: "Drew King, Derek J Liu, Sierra Briscoe, Alicia Lee"
+date: "08-04-2023"
 output: html_document
 ---
 
@@ -58,24 +59,23 @@ Briefly introduce your project.  Include 3-5 research questions. What motivates 
   * This data was collected to identify location indicators affecting climate temperature change over time. Authors Berkeley Earth and Kristen Sissener acknowledge the ongoing debate on whether climate change is a real issue, and collected this wide range of temporal data by location in order to represent a seemingly unbiased data set for analysis. By providing data based on location rather than population per capita, the data eradicates any room for socioeconomic debate and only provides space to analyze the correlation between date and location in temporal history.
 
 * Dimensions of dataset
-  * The global data has `3192` rows.
-  * The data by country has `577462` rows.
-  * The data by city has `8599212` rows.
-  * The global data has `9` columns.
-  * The data by country has `4` columns.
-  * The data by city has `7` columns.
+```{r, echo = FALSE, message = FALSE, warning = FALSE}
+source("analysis.R")
+dim_table <- get_dim()
+knitr::kable(dim_table)
+```
 
 * Some ethical questions considered when working with this data include...
 
   * Is the data representative of the global population?
 
-    * Considering that there is no information on each individual place across the world, the data will not provide very high confidence of causation or correlation between environmental placement and its impact. In order to do so, there would need to be granular data provided for each and every individual city, state, and country worldwide. Knowing that this data set spans across such a large amount of time, it is fair to assume this would not be a possibility to provide, however the ethical dilemma of representation within the dataset still very much stands.
+    * Considering that there is no information on each individual place across the world, the data will not provide very high confidence of causation or correlation between environmental placement and its impact. In order to do so, there would need to be granular data provided for each and every individual city, state, and country worldwide. Knowing that this data set spans across such a large amount of time, it is fair to assume this would not be a possibility to provide, however the ethical dilemma of representation within the data-set still very much stands.
 
   * Does the data have a motive or an agenda behind it?
   
     * Knowing that climate change is not just a scientific problem, but also a highly politicized issue forces the consideration of integrity behind the data collection. What is being left out? How do the indicators selected create gaps in our data set? Are these gaps intentional or causal? It is important to consider these questions when approaching these data sets in order to consider the marginalized groups. Because we know that the poorest countries in the world lack resources that would provide them with environmental preservation efforts, it would be unethical to assume the baseline for each country remains the same.
 
-* It is important to consider that this data set has some limitations; the data dates back to 1750, all the way up to 2017. While this is a large dataset, it isn’t necessarily the most updated representation of the climate today since it excludes the previous six years of data. Therefore a trend-line for future predictions may be helpful to use and compare with current temperatures for accuracy. This dataset also lacks granular data for all surface locations on the globe, another limitation of this dataset. The missing data is notable because it inhibits the accuracy of the data representation.
+* It is important to consider that this data set has some limitations; the data dates back to 1750, all the way up to 2015. While this is a large data-set, it isn’t necessarily the most updated representation of the climate today since it excludes the previous six years of data. Therefore a trend-line for future predictions may be helpful to use and compare with current temperatures for accuracy. This data-set also lacks granular data for all surface locations on the globe, another limitation of this data-set. The missing data is notable because it inhibits the accuracy of the data representation.
 
 
 ### Implications
@@ -95,7 +95,7 @@ Include a table of aggregate information
 
 Describe why you included the table and what information it reveals
 
-``````{r, echo = FALSE, code = readLines("summary.R")}
+``````{r, echo = FALSE, message = FALSE, warning = FALSE, code = readLines("summary.R")}
 ```
 
 ### Chart 1
@@ -106,7 +106,7 @@ Describe why you chose this chart and what information it reveals
 
 Here's an example of how to run an R script inside an RMarkdown file:
 
-``````{r, echo = FALSE, code = readLines("chart1.R")}
+``````{r, echo = FALSE, message = FALSE, warning = FALSE, code = readLines("chart1.R")}
 ```
 
 ### Chart 2
@@ -115,7 +115,7 @@ Include a chart
 
 Describe why you chose this chart and what information it reveals
 
-``````{r, echo = FALSE, code = readLines("chart2.R")}
+``````{r, echo = FALSE, message = FALSE, warning = FALSE, code = readLines("chart2.R")}
 ```
 
 ### Chart 3
@@ -124,7 +124,7 @@ Include a chart
 
 Describe why you chose this chart and what information it reveals
 
-``````{r, echo = FALSE, code = readLines("chart3.R")}
+``````{r, echo = FALSE, message = FALSE, warning = FALSE, code = readLines("chart3.R")}
 ```
 
 ### Citations
