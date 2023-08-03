@@ -7,8 +7,9 @@ country_temp <- read_csv("data/GlobalLandTemperaturesByCountry.csv")
 city_temp <- read_csv("data/GlobalLandTemperaturesByCity.csv")
 
 # Aggregate data into annual data:
-annual_global_temp <- annual_temp_helper(global_temp)
+annual_global_temp <- global_temp_helper(global_temp)
 annual_country_temp <- country_temp_helper(country_temp)
+annual_city_temp <- city_temp_helper(city_temp)
 
 # Get dimensions
 get_dim <- function(){
@@ -58,7 +59,7 @@ get_col_str <- function(){
 }
 
 # Helper functions:
-annual_temp_helper <- function(temp_data){
+global_temp_helper <- function(temp_data){
   temp <- temp_data %>%
     group_by(dt = floor_date(dt, 'year')) %>%
     summarise(
@@ -93,6 +94,22 @@ country_temp_helper <- function(temp_data){
     mutate(dt = format(dt, "%Y")) %>%
     mutate_all(~ifelse(is.nan(.), NA, .)) %>%
     mutate_all(~ifelse(is.infinite(.), NA, .))
+  return(temp)
+}
+
+city_temp_helper <- function(temp_data){
+  temp <- temp_data %>%
+    mutate(dt = format(dt, "%Y")) %>%
+    group_by(Country, City, dt) %>%
+    summarise(
+      City,
+      Country,
+      AverageTemperature = mean(AverageTemperature, na.rm = TRUE),
+      AverageTemperatureUncertainty = mean(AverageTemperatureUncertainty,
+                                           na.rm = TRUE),
+      Latitude,
+      Longitude) %>%
+    distinct(Country, City, dt, .keep_all = TRUE)
   return(temp)
 }
 
