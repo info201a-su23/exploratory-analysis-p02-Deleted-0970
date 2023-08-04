@@ -1,9 +1,7 @@
 source("analysis.R") # access analysis.R methods and data
-library(ggplot2) # create plots
-library(dplyr) # data wrangling
+library(tidyverse) # data wrangling
 library(scales) # for map creation
 library(maps) # for map creation
-library(readr) # allows for read_csv to create tibble
 library(plotly) # adds interactive labels on graph
 
 

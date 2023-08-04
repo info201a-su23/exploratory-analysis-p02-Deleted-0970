@@ -1,8 +1,22 @@
 source("analysis.R") # access analysis.R methods and data
-library(ggplot2) # plot creation
-library(dplyr) # data wrangling
+library(tidyverse)
+library(plotly) # for plotting
 
+# Organize Year data
+global_temp <- annual_global_temp %>% 
+  mutate(dt = as.numeric(dt)) %>%
+  arrange(dt) %>%
+  rename(Year = dt, AvgTemp = LandAverageTemperature)
 
+# Create Scatter plot
+temp_plot <- ggplot(data = global_temp, aes(x = Year, y = AvgTemp)) +
+  geom_point(size = 0.75) + 
+  labs(title = "Average Global Temperature Over Time",
+       x = "Year",
+       y = "Average Temperature"
+       ) +
+  geom_smooth(method = "loess", formula = y ~ x) +
+  theme_light()
 
 # Calculate the first derivative (velocity of temperature change)
 # vel_global_temp <- annual_global_temp %>%
@@ -23,25 +37,9 @@ library(dplyr) # data wrangling
 #       ) +
 #  geom_smooth(method = "loess", formula = y ~ x) +
 #  scale_y_log10() + theme_light()
-  
+
 # plotly to make it interative :D
 #ggplotly(vel_plot)
-
-# Organize Year data
-global_temp <- annual_global_temp %>% 
-  mutate(dt = as.numeric(dt)) %>%
-  arrange(dt) %>%
-  rename(Year = dt, AvgTemp = LandAverageTemperature)
-
-# Create Scatter plot
-temp_plot <- ggplot(data = global_temp, aes(x = Year, y = AvgTemp)) +
-  geom_point(size = 0.75) + 
-  labs(title = "Average Global Temperature Over Time",
-       x = "Year",
-       y = "Average Temperature"
-       ) +
-  geom_smooth(method = "loess", formula = y ~ x) +
-  theme_light()
 
 ggplotly(temp_plot)
 
