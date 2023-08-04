@@ -120,10 +120,21 @@ We found:
 
 This table is included to give a more detailed understanding of our global data summary statistics, this table includes average land and sea temperatures as well as the confidence interval for each calculation.
 
-``````{r, echo = FALSE, message = FALSE, warning = FALSE}
+```{r, echo = FALSE, message = FALSE, warning = FALSE}
 source("analysis.R", local = knitr::knit_global())
 library(knitr)
-global_summary_table <- global_annual_summary()
+library(dplyr)
+global_summary_table <- global_annual_summary() %>%
+  reframe(
+    `Date` = dt,
+    `Event` = event_type,
+    `LandTemp` = LandAverageTemperature,
+    `TempConfidence` = LandAverageTemperatureUncertainty,
+    `MaxTemp` = LandMaxTemperature,
+    `MaxTempConfidence` = LandMaxTemperatureUncertainty,
+    `MinTemperature` = LandMinTemperature,
+    `MinTempConfidence` = LandMinTemperatureUncertainty
+  )
 knitr::kable(global_summary_table)
 ```
 
@@ -135,7 +146,7 @@ Describe why you chose this chart and what information it reveals
 
 Here's an example of how to run an R script inside an RMarkdown file:
 
-``````{r, echo = FALSE, message = FALSE, warning = FALSE, code = readLines("chart1.R")}
+```{r, echo = FALSE, message = FALSE, warning = FALSE, code = readLines("chart1.R")}
 ```
 
 ### Chart 2
@@ -144,7 +155,7 @@ Include a chart
 
 Describe why you chose this chart and what information it reveals
 
-``````{r, echo = FALSE, message = FALSE, warning = FALSE, code = readLines("chart2.R")}
+```{r, echo = FALSE, message = FALSE, warning = FALSE, code = readLines("chart2.R")}
 ```
 
 ### Chart 3
@@ -153,7 +164,7 @@ Include a chart
 
 Describe why you chose this chart and what information it reveals
 
-``````{r, echo = FALSE, message = FALSE, warning = FALSE, code = readLines("chart3.R")}
+```{r, echo = FALSE, message = FALSE, warning = FALSE, code = readLines("chart3.R")}
 ```
 
 ### Citations
