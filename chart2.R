@@ -43,7 +43,7 @@ temp_bar <- ggplot(
        x = "Continent",
        y = "Average Temperature",
        fill = "Average Temperature") +
-  theme_light()
+  theme_light() + coord_fixed()
 
 ggplotly(temp_bar)
 
