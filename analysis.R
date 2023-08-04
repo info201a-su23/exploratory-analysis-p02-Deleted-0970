@@ -22,7 +22,7 @@ get_dim <- function(){
     `global_temp` = c(rows_global, cols_global),
     `country_temp` = c(rows_country, cols_country),
     `city_temp` = c(rows_city, cols_city)
-    )
+  )
   return(dim_table)
 }
 
@@ -87,8 +87,8 @@ country_temp_helper <- function(temp_data){
       MinAverageTemperature = min(AverageTemperature, na.rm = TRUE),
       AverageTemperature = mean(AverageTemperature, na.rm = TRUE),
       AverageTemperatureUncertainty = mean(AverageTemperatureUncertainty,
-                                               na.rm = TRUE)
-      ) %>%
+                                           na.rm = TRUE)
+    ) %>%
     mutate(dt = format(dt, "%Y")) %>%
     mutate_all(~ifelse(is.nan(.), NA, .)) %>%
     mutate_all(~ifelse(is.infinite(.), NA, .))
@@ -114,7 +114,7 @@ city_temp_helper <- function(temp_data){
       is.infinite(MaxAverageTemperature), NA, MaxAverageTemperature),
       MinAverageTemperature = ifelse(
         is.infinite(MinAverageTemperature), NA, MinAverageTemperature)
-      )
+    )
   return(temp)
 }
 
@@ -161,6 +161,19 @@ reframe_by_city_event_type <- function(climate_data){
             Longitude
     )
   return(climate_data)
+}
+
+convert_coords <- function(coord_data) {
+  coord_data %>%
+    mutate(lat = as.numeric(sub("([0-9.]+)[NS]", "\\1", Latitude))) %>%
+    mutate(lat = ifelse(
+      substr(Latitude, nchar(Latitude), nchar(Latitude)) == "S", -lat, lat)) %>%
+    select(-Latitude) %>%
+    mutate(lng = as.numeric(sub("([0-9.]+)[EW]", "\\1", Longitude))) %>%
+    mutate(lng = ifelse(
+      substr(Longitude, nchar(Longitude), nchar(Longitude)) == "W",
+      -lng, lng)) %>%
+    select(-Longitude)
 }
 
 # Aggregate data into annual data using helper functions:
@@ -258,7 +271,7 @@ global_avg_temp <- function(start_year = 1750, end_year = 2015){
         LandAndOceanAverageTemperature, na.rm = TRUE),
       LandAndOceanAverageTemperatureUncertainty = mean(
         LandAndOceanAverageTemperatureUncertainty, na.rm = TRUE)
-      ) %>%
+    ) %>%
     mutate(event_type = "avg_temp") %>%
     reframe_by_global_event_type()
   return(avg_temp)
@@ -452,6 +465,17 @@ city_annual_summary <- function(start_year = 1850, end_year = 2013){
     full_join(min) %>%
     full_join(avg) %>%
     full_join(chg) %>%
-    arrange(desc(dt))
+    arrange(desc(dt)) %>%
+    mutate(AverageTemperature = ifelse(
+      is.nan(AverageTemperature), NA, AverageTemperature),
+      MaxAverageTemperature = ifelse(
+        is.nan(MaxAverageTemperature), NA, MaxAverageTemperature),
+      MinAverageTemperature = ifelse(
+        is.nan(MinAverageTemperature), NA, MinAverageTemperature),
+      AverageTemperatureUncertainty = ifelse(
+        is.nan(AverageTemperatureUncertainty), NA,
+        AverageTemperatureUncertainty),
+    ) %>%
+    convert_coords()
   return(summary_tbl)
 }
