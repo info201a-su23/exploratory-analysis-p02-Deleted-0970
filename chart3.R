@@ -1,6 +1,5 @@
 source("analysis.R")
 library(tidyverse)
-library(lubridate)
 library(plotly)
 
 # Calculate city temperature change
@@ -9,7 +8,6 @@ city_temp_change_summary <- city_temp_change()
 # Function to filter city temperature by change
 city_temp_differences <- function(temp_summary) {
   temp_diff_data <- temp_summary %>%
-    convert_coords() %>%
     reframe(
       Country,
       City,

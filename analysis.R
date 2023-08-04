@@ -1,27 +1,26 @@
 library(tidyverse)
-library(lubridate)
 
 # Read data into file
 global_temp <- read_csv("data/GlobalTemperatures.csv")
 country_temp <- read_csv("data/GlobalLandTemperaturesByCountry.csv")
-city_temp <- read_csv("data/GlobalLandTemperaturesByCity.csv")
+annual_city_temp <- read_csv("CityAnnualTemps.csv")
 
 # Get dimensions
 get_dim <- function(){
   # Number of rows:
   rows_global <- nrow(global_temp)
   rows_country <- nrow(country_temp)
-  rows_city <- nrow(city_temp)
+  rows_city <- nrow(annual_city_temp)
   # Number of columns:
   cols_global <- ncol(global_temp)
   cols_country <- ncol(country_temp)
-  cols_city <- ncol(city_temp)
+  cols_city <- ncol(annual_city_temp)
   
   dim_table <- data.frame(
     `Dimensions` = c("Rows", "Columns"),
     `global_temp` = c(rows_global, cols_global),
     `country_temp` = c(rows_country, cols_country),
-    `city_temp` = c(rows_city, cols_city)
+    `annual_city_temp` = c(rows_city, cols_city)
   )
   return(dim_table)
 }
@@ -30,12 +29,12 @@ get_dim <- function(){
 get_colnames <- function(){
   colnames_global <- colnames(global_temp)
   colnames_country <- colnames(country_temp)
-  colnames_city <- colnames(city_temp)
+  colnames_city <- colnames(annual_city_temp)
   
   col_name_list <- list(
     global_temp = colnames_global,
     country_temp = colnames_country,
-    city_temp = colnames_city
+    annual_city_temp = colnames_city
   )
   return(col_name_list)
 }
@@ -44,12 +43,12 @@ get_colnames <- function(){
 get_col_str <- function(){
   coltypes_global <- str(global_temp)
   coltypes_country <- str(country_temp)
-  coltypes_city <- str(city_temp)
+  coltypes_city <- str(annual_city_temp)
   
   col_str_list <- list(
     global_temp = coltypes_global,
     country_temp = coltypes_country,
-    city_temp = coltypes_city
+    annual_city_temp = coltypes_city
   )
 }
 
@@ -95,29 +94,6 @@ country_temp_helper <- function(temp_data){
   return(temp)
 }
 
-city_temp_helper <- function(temp_data){
-  temp <- temp_data %>%
-    mutate(dt = format(dt, "%Y")) %>%
-    group_by(Country, City, dt) %>%
-    summarise(
-      City,
-      Country,
-      MaxAverageTemperature = max(AverageTemperature, na.rm = TRUE),
-      MinAverageTemperature = min(AverageTemperature, na.rm = TRUE),
-      AverageTemperature = mean(AverageTemperature, na.rm = TRUE),
-      AverageTemperatureUncertainty = mean(AverageTemperatureUncertainty,
-                                           na.rm = TRUE),
-      Latitude,
-      Longitude) %>%
-    distinct(Country, City, dt, .keep_all = TRUE) %>%
-    mutate(MaxAverageTemperature = ifelse(
-      is.infinite(MaxAverageTemperature), NA, MaxAverageTemperature),
-      MinAverageTemperature = ifelse(
-        is.infinite(MinAverageTemperature), NA, MinAverageTemperature)
-    )
-  return(temp)
-}
-
 reframe_by_global_event_type <- function(climate_data){
   climate_data <- climate_data %>%
     reframe(dt,
@@ -157,29 +133,15 @@ reframe_by_city_event_type <- function(climate_data){
             MaxAverageTemperature,
             MinAverageTemperature,
             AverageTemperatureUncertainty,
-            Latitude,
-            Longitude
+            lat,
+            lng
     )
   return(climate_data)
-}
-
-convert_coords <- function(coord_data) {
-  coord_data %>%
-    mutate(lat = as.numeric(sub("([0-9.]+)[NS]", "\\1", Latitude))) %>%
-    mutate(lat = ifelse(
-      substr(Latitude, nchar(Latitude), nchar(Latitude)) == "S", -lat, lat)) %>%
-    select(-Latitude) %>%
-    mutate(lng = as.numeric(sub("([0-9.]+)[EW]", "\\1", Longitude))) %>%
-    mutate(lng = ifelse(
-      substr(Longitude, nchar(Longitude), nchar(Longitude)) == "W",
-      -lng, lng)) %>%
-    select(-Longitude)
 }
 
 # Aggregate data into annual data using helper functions:
 annual_global_temp <- global_temp_helper(global_temp)
 annual_country_temp <- country_temp_helper(country_temp)
-annual_city_temp <- city_temp_helper(city_temp)
 
 # Questions to answer:
 # 1: How much have global land temperatures changed since 1750?
@@ -446,8 +408,8 @@ city_avg_temp <- function(start_year = 1850, end_year = 2013){
                                            na.rm = TRUE),
       MaxAverageTemperature = mean(MaxAverageTemperature, na.rm = TRUE),
       MinAverageTemperature = mean(MinAverageTemperature, na.rm = TRUE),
-      Latitude,
-      Longitude
+      lat,
+      lng
     ) %>%
     distinct(Country, City, .keep_all = TRUE) %>%
     reframe_by_city_event_type()
@@ -475,7 +437,6 @@ city_annual_summary <- function(start_year = 1850, end_year = 2013){
       AverageTemperatureUncertainty = ifelse(
         is.nan(AverageTemperatureUncertainty), NA,
         AverageTemperatureUncertainty),
-    ) %>%
-    convert_coords()
+    )
   return(summary_tbl)
 }
