@@ -465,6 +465,17 @@ city_annual_summary <- function(start_year = 1850, end_year = 2013){
     full_join(min) %>%
     full_join(avg) %>%
     full_join(chg) %>%
-    arrange(desc(dt))
+    arrange(desc(dt)) %>%
+    mutate(AverageTemperature = ifelse(
+      is.nan(AverageTemperature), NA, AverageTemperature),
+      MaxAverageTemperature = ifelse(
+        is.nan(MaxAverageTemperature), NA, MaxAverageTemperature),
+      MinAverageTemperature = ifelse(
+        is.nan(MinAverageTemperature), NA, MinAverageTemperature),
+      AverageTemperatureUncertainty = ifelse(
+        is.nan(AverageTemperatureUncertainty), NA,
+        AverageTemperatureUncertainty),
+    ) %>%
+    convert_coords()
   return(summary_tbl)
 }

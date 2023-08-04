@@ -8,18 +8,7 @@ city_temp_change_summary <- city_annual_summary()
 # Function to calculate city temperature differences
 city_temp_differences <- function(temp_summary) {
   temp_diff_data <- temp_summary %>%
-    filter(event_type == "chg_temp") %>%
-    mutate(AverageTemperature = ifelse(
-      is.nan(AverageTemperature), NA, AverageTemperature),
-      MaxAverageTemperature = ifelse(
-        is.nan(MaxAverageTemperature), NA, MaxAverageTemperature),
-      MinAverageTemperature = ifelse(
-        is.nan(MinAverageTemperature), NA, MinAverageTemperature),
-      AverageTemperatureUncertainty = ifelse(
-        is.nan(AverageTemperatureUncertainty), NA,
-        AverageTemperatureUncertainty),
-      ) %>%
-    convert_coords()
+    filter(event_type == "chg_temp")
   return(temp_diff_data)
 }
 
