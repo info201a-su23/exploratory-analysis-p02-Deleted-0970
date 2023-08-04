@@ -107,23 +107,6 @@ blank_theme <- theme_bw() +
   )
 
 # creating map with ggplot2
-ggplot(data = world_temp_map) +
-  geom_polygon(mapping = aes(x = long,
-                             y = lat,
-                             group = group,
-                             fill = AverageTemperature),
-               text = paste("Country: ", world_temp_map$country_corrected, 
-                            "<br>",
-                            "Avg Temp: ", world_temp_map$AverageTemperature)) +
-  scale_fill_continuous(low = "grey",
-                        high = "red",
-                        limits = c(-20, 40)) +
-  labs(title = "Average Temperature By Country",
-       fill = "Temperature (C)") + blank_theme +
-  ggplotly(tooltip = "text")
-
-
-# creating map with ggplot2
 temp_map <- ggplot(data = world_temp_map) +
   geom_polygon(mapping = aes(x = long,
                              y = lat,
