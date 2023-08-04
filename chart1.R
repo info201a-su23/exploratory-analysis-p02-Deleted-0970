@@ -120,4 +120,4 @@ temp_map <- ggplot(data = world_temp_map) +
   blank_theme
 
 # plotly for interactivity :D
-ggplotly(temp_map)
+temp_map <- ggplotly(temp_map)

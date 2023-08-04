@@ -28,6 +28,19 @@ city_temp_diff_data <- city_temp_differences(city_temp_change_summary)
 # world map from ggplot2
 world_map <- map_data('world')
 
+# blank theme to remove labels
+blank_theme <- theme_bw() +
+  theme(
+    axis.line = element_blank(), # remove axis lines
+    axis.text = element_blank(), # remove axis labels
+    axis.ticks = element_blank(), # remove axis ticks
+    axis.title = element_blank(), # remove axis titles
+    plot.background = element_blank(), # remove gray background
+    panel.grid.major = element_blank(), # remove major grid lines
+    panel.grid.minor = element_blank(), # remove minor grid lines
+    panel.border = element_blank(), # remove border around plot
+  )
+
 # Create the Bubble chart
 city_plot <- ggplot() +
   geom_polygon(data = world_map, 
@@ -51,7 +64,7 @@ city_plot <- ggplot() +
        y = "Latitude",
        size = "Temperature Uncertainty", # TODO: This is not showing up on chart
        color = "Temperature Difference") +
-  theme_minimal()
+  theme_minimal() + blank_theme
 
-ggplotly(city_plot)
+city_plot <- ggplotly(city_plot)
 

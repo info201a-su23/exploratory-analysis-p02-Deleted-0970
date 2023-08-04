@@ -146,7 +146,18 @@ Describe why you chose this chart and what information it reveals
 
 Here's an example of how to run an R script inside an RMarkdown file:
 
-```{r, echo = FALSE, message = FALSE, warning = FALSE, code = readLines("chart1.R")}
+```{r, echo = FALSE, message = FALSE, warning = FALSE}
+library(tidyverse) # data wrangling
+library(scales) # for map creation
+library(maps) # for map creation
+library(plotly) # interactive plot
+
+source("chart1.R")
+source("chart3.R")
+
+temp_map
+
+city_plot
 ```
 
 ### Chart 2
