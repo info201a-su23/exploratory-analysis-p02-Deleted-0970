@@ -121,4 +121,4 @@ temp_map <- ggplot(data = world_temp_map) +
        fill = "Temperature (C)") + blank_theme
 
 # plotly for interactivity :D
-plotly::ggplotly(temp_map)
+ggplotly(temp_map)
