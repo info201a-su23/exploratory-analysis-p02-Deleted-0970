@@ -1,26 +1,36 @@
 source("analysis.R")
-library(ggplot2)
+library(tidyverse)
+library(lubridate)
 
-# Function to calculate the difference in heat between years for each city
-city_temp_difference <- function(start_year = 1850, end_year = 2013){
-  temp_diff <- city_annual_summary(start_year, end_year) %>%
+# Suppress the warning temporarily
+suppressWarnings({
+  # Calculate city temperature change
+  city_temp_change_summary <- city_annual_summary(start_year = 1850, end_year = 2013)
+})
+
+# Function to calculate city temperature differences
+calculate_city_temp_differences <- function(temp_summary) {
+  temp_diff_data <- temp_summary %>%
     group_by(Country, City) %>%
-    arrange(dt) %>%
-    mutate(HeatDifference = diff(AverageTemperature, lag = 1)) %>%
+    mutate(
+      HeatDifference = AverageTemperature - lag(AverageTemperature, default = first(AverageTemperature)),
+      HeatDifference = ifelse(is.na(HeatDifference), 0, HeatDifference)
+    ) %>%
     ungroup()
-  return(temp_diff)
+  return(temp_diff_data)
 }
 
-# Calculate the difference in heat between years for each city
-heat_diff_data <- city_temp_difference()
+# Calculate city temperature differences using the new function
+city_temp_diff_data <- calculate_city_temp_differences(city_temp_change_summary)
 
 # Create the Bubble chart
-ggplot(heat_diff_data, aes(x = Longitude, y = Latitude, size = HeatDifference, color = dt)) +
+ggplot(city_temp_diff_data, aes(x = Longitude, y = Latitude, size = HeatDifference)) +
   geom_point(alpha = 0.7) +
-  scale_size_continuous(range = c(5, 15)) +  # Adjust the size range of bubbles as needed
-  labs(title = "Difference in Heat by Year",
+  scale_size_continuous(range = c(1, 5)) +  # Adjust the range of bubble sizes
+  labs(title = "City Temperature Changes",
        x = "Longitude",
        y = "Latitude",
-       size = "Heat Difference",
+       size = "Temperature Difference",
        color = "Year") +
   theme_minimal()
+

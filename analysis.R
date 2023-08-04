@@ -22,7 +22,7 @@ get_dim <- function(){
     `global_temp` = c(rows_global, cols_global),
     `country_temp` = c(rows_country, cols_country),
     `city_temp` = c(rows_city, cols_city)
-    )
+  )
   return(dim_table)
 }
 
@@ -87,8 +87,8 @@ country_temp_helper <- function(temp_data){
       MinAverageTemperature = min(AverageTemperature, na.rm = TRUE),
       AverageTemperature = mean(AverageTemperature, na.rm = TRUE),
       AverageTemperatureUncertainty = mean(AverageTemperatureUncertainty,
-                                               na.rm = TRUE)
-      ) %>%
+                                           na.rm = TRUE)
+    ) %>%
     mutate(dt = format(dt, "%Y")) %>%
     mutate_all(~ifelse(is.nan(.), NA, .)) %>%
     mutate_all(~ifelse(is.infinite(.), NA, .))
@@ -114,7 +114,7 @@ city_temp_helper <- function(temp_data){
       is.infinite(MaxAverageTemperature), NA, MaxAverageTemperature),
       MinAverageTemperature = ifelse(
         is.infinite(MinAverageTemperature), NA, MinAverageTemperature)
-      )
+    )
   return(temp)
 }
 
@@ -258,7 +258,7 @@ global_avg_temp <- function(start_year = 1750, end_year = 2015){
         LandAndOceanAverageTemperature, na.rm = TRUE),
       LandAndOceanAverageTemperatureUncertainty = mean(
         LandAndOceanAverageTemperatureUncertainty, na.rm = TRUE)
-      ) %>%
+    ) %>%
     mutate(event_type = "avg_temp") %>%
     reframe_by_global_event_type()
   return(avg_temp)
