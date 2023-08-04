@@ -123,7 +123,18 @@ This table is included to give a more detailed understanding of our global data 
 ```{r, echo = FALSE, message = FALSE, warning = FALSE}
 source("analysis.R", local = knitr::knit_global())
 library(knitr)
-global_summary_table <- global_annual_summary()
+library(dplyr)
+global_summary_table <- global_annual_summary() %>%
+  reframe(
+    `Date` = dt,
+    `Event` = event_type,
+    `LandTemp` = LandAverageTemperature,
+    `TempConfidence` = LandAverageTemperatureUncertainty,
+    `MaxTemp` = LandMaxTemperature,
+    `MaxTempConfidence` = LandMaxTemperatureUncertainty,
+    `MinTemperature` = LandMinTemperature,
+    `MinTempConfidence` = LandMinTemperatureUncertainty
+  )
 knitr::kable(global_summary_table)
 ```
 
