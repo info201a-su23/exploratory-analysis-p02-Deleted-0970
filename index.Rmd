@@ -133,9 +133,7 @@ global_summary_table <- global_annual_summary() %>%
     `MaxTemp` = LandMaxTemperature,
     `MaxTempConfidence` = LandMaxTemperatureUncertainty,
     `MinTemperature` = LandMinTemperature,
-    `MinTempConfidence` = LandMinTemperatureUncertainty,
-    `LandAndSeaTemp` = LandAndOceanAverageTemperature,
-    `LandAndSeaTempConfidence` = LandAndOceanAverageTemperatureUncertainty
+    `MinTempConfidence` = LandMinTemperatureUncertainty
   )
 knitr::kable(global_summary_table)
 ```
