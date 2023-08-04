@@ -64,7 +64,7 @@ city_plot <- ggplot() +
        y = "Latitude",
        size = "Temperature Uncertainty", # TODO: This is not showing up on chart
        color = "Temperature Difference") +
-  theme_minimal() + blank_theme
+  theme_minimal() + blank_theme + coord_fixed()
 
 city_plot <- ggplotly(city_plot)
 
