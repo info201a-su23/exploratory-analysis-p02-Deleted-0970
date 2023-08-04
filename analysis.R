@@ -163,6 +163,19 @@ reframe_by_city_event_type <- function(climate_data){
   return(climate_data)
 }
 
+convert_coords <- function(coord_data) {
+  coord_data %>%
+    mutate(lat = as.numeric(sub("([0-9.]+)[NS]", "\\1", Latitude))) %>%
+    mutate(lat = ifelse(
+      substr(Latitude, nchar(Latitude), nchar(Latitude)) == "S", -lat, lat)) %>%
+    select(-Latitude) %>%
+    mutate(lng = as.numeric(sub("([0-9.]+)[EW]", "\\1", Longitude))) %>%
+    mutate(lng = ifelse(
+      substr(Longitude, nchar(Longitude), nchar(Longitude)) == "W",
+      -lng, lng)) %>%
+    select(-Longitude)
+}
+
 # Aggregate data into annual data using helper functions:
 annual_global_temp <- global_temp_helper(global_temp)
 annual_country_temp <- country_temp_helper(country_temp)

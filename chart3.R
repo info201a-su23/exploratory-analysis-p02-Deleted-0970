@@ -2,35 +2,39 @@ source("analysis.R")
 library(tidyverse)
 library(lubridate)
 
-# Suppress the warning temporarily
-suppressWarnings({
-  # Calculate city temperature change
-  city_temp_change_summary <- city_annual_summary(start_year = 1850, end_year = 2013)
-})
+# Calculate city temperature change
+city_temp_change_summary <- city_annual_summary()
 
 # Function to calculate city temperature differences
-calculate_city_temp_differences <- function(temp_summary) {
+city_temp_differences <- function(temp_summary) {
   temp_diff_data <- temp_summary %>%
-    group_by(Country, City) %>%
-    mutate(
-      HeatDifference = AverageTemperature - lag(AverageTemperature, default = first(AverageTemperature)),
-      HeatDifference = ifelse(is.na(HeatDifference), 0, HeatDifference)
-    ) %>%
-    ungroup()
+    filter(event_type == "chg_temp") %>%
+    mutate(AverageTemperature = ifelse(
+      is.nan(AverageTemperature), NA, AverageTemperature),
+      MaxAverageTemperature = ifelse(
+        is.nan(MaxAverageTemperature), NA, MaxAverageTemperature),
+      MinAverageTemperature = ifelse(
+        is.nan(MinAverageTemperature), NA, MinAverageTemperature),
+      AverageTemperatureUncertainty = ifelse(
+        is.nan(AverageTemperatureUncertainty), NA,
+        AverageTemperatureUncertainty),
+      ) %>%
+    convert_coords()
   return(temp_diff_data)
 }
 
 # Calculate city temperature differences using the new function
-city_temp_diff_data <- calculate_city_temp_differences(city_temp_change_summary)
+city_temp_diff_data <- city_temp_differences(city_temp_change_summary)
 
 # Create the Bubble chart
-ggplot(city_temp_diff_data, aes(x = Longitude, y = Latitude, size = HeatDifference)) +
-  geom_point(alpha = 0.7) +
+ggplot(city_temp_diff_data, aes(x = lng, y = lat,
+                                size = AverageTemperatureUncertainty)) +
+  geom_point(alpha = 0.5, aes(colour = AverageTemperature)) +
   scale_size_continuous(range = c(1, 5)) +  # Adjust the range of bubble sizes
   labs(title = "City Temperature Changes",
        x = "Longitude",
        y = "Latitude",
-       size = "Temperature Difference",
-       color = "Year") +
+       size = "Temperature Uncertainty",
+       color = "Temperature Difference") +
   theme_minimal()
 
