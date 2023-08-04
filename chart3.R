@@ -32,6 +32,7 @@ ggplot(city_temp_diff_data, aes(x = lng, y = lat,
   geom_point(alpha = 0.5, aes(colour = AverageTemperature)) +
   scale_size_continuous(range = c(1, 5)) +  # Adjust the range of bubble sizes
   labs(title = "City Temperature Changes",
+       subtitle = "Change in city temperatures from 1850-2013",
        x = "Longitude",
        y = "Latitude",
        size = "Temperature Uncertainty",
