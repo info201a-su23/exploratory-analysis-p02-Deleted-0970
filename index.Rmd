@@ -175,7 +175,7 @@ Include a chart
 
 Describe why you chose this chart and what information it reveals
 
-```{r, echo = FALSE, message = FALSE, warning = FALSE, code = readLines("chart3.R")}
+```{r, echo = FALSE, message = FALSE, warning = FALSE, code = readLines("chart2.R")}
 ```
 
 ### Citations
