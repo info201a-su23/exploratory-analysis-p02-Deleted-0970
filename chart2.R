@@ -1,7 +1,7 @@
 source("analysis.R") # access analysis.R methods and data
 library(ggplot2) # plot creation
 library(dplyr) # data wrangling
-
+library(plotly) # for plotting
 
 
 # Calculate the first derivative (velocity of temperature change)
