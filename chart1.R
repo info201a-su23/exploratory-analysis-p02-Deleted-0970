@@ -118,7 +118,8 @@ temp_map <- ggplot(data = world_temp_map) +
                         high = "red",
                         limits = c(-20, 40)) +
   labs(title = "Average Temperature By Country",
-       fill = "Temperature (C)") + blank_theme
+       fill = "Temperature (C)") + coord_fixed() +
+  blank_theme
 
 # plotly for interactivity :D
 ggplotly(temp_map)
