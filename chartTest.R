@@ -15,7 +15,7 @@ library(dplyr) # data wrangling
     )
 
 # Create the scatterplot
- vel_plot <- ggplot(
+vel_plot <- ggplot(
    data = vel_global_temp, 
    aes(
      x = Year, 
@@ -34,7 +34,7 @@ library(dplyr) # data wrangling
      title = "Temperature Uncertainty")) +
    scale_size_continuous(range = c(1, 7)) +
    scale_alpha_continuous(range = c(0.2, 1)) +
-   vel_plot + geom_smooth(method = "loess", formula = y ~ x, se = FALSE)
+  geom_smooth(method = "loess", formula = y ~ x, se = FALSE)
 
 # plotly to make it interative :D
 ggplotly(vel_plot)
