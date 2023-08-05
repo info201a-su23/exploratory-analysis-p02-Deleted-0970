@@ -65,9 +65,9 @@ Finding answers to these questions is important since they will ensure
 scientific accountability, raise awareness in large audiences, maintain
 documentation of historical data, and hopefully advocate for international
 collaboration. It is important to consider that this data set has some
-limitations; the data dates back to 1750, all the way up to 2017. While this is
+limitations; the data dates back to 1750, all the way up to 2015. While this is
 a large dataset, it isn’t necessarily the most updated representation of the
-climate today since it excludes the previous six years of data. Therefore a
+climate today since it excludes the previous eight years of data. Therefore a
 trendline for future predictions may be helpful to use and compare with current
 temperatures for accuracy. This dataset lacks granular data for every place on
 the globe, a limitation of this dataset. The missing data is notable because it
@@ -83,8 +83,9 @@ of 'information' on its effects and causes exists. Accessing reliable sources
 such as academic journals or the platforms of esteemed scientific organizations
 like the UN, NOAA, or NASA is recommended.
 
-* The **UN** provides a ‘[Climate Action Note](https://www.unep.org/explore-topics/climate-action/what-we-do/climate-action-note/state-of-climate.html)’, which provides data maps on the increase of emissions since
-1990. This data set provides interactive data maps on climate change per total
+* The **UN** provides a 
+[Climate Action Note](https://www.unep.org/explore-topics/climate-action/what-we-do/climate-action-note/state-of-climate.html)’
+, which provides data maps on the increase of emissions since 1990. This data set provides interactive data maps on climate change per total
 emissions and capita emissions, by country. What is most interesting about this
 particular data set is that they provide economic data on the countries
 contributing to climate change as well. This is beneficial in understanding
@@ -115,7 +116,7 @@ either a trend-line graph, a regular line graph, or a temporal world map that is
 interactive.
 
 All of these articles provide additional supporting data and impact to the
-questions we are trying to answer, but more than that, they are all coming from
+questions laid out by the report, but more than that, they are all coming from
 major scientific organizations that are credible, reliable, and actively
 involved in providing systemic solutions to the climate crisis. The goal of this
 project is to create data visualizations which contribute to the accessibility
@@ -177,12 +178,12 @@ Some ethical questions considered when working with this data include...
   * Knowing that climate change is not just a scientific problem, but also a
   highly politicized issue forces the consideration of integrity behind the data
   collection. What is being left out? How do the indicators selected create gaps
-  in our data set? Are these gaps intentional or causal? It is important to
+  in this data set? Are these gaps intentional or causal? It is important to
   consider these questions when approaching these data sets in order to consider
-  the marginalized groups. Because we know that the poorest countries in the
-  world lack resources that would provide them with environmental preservation
-  efforts, it would be unethical to assume the baseline for each country remains
-  the same.
+  the marginalized groups. Because research has established that the poorest 
+  countries in the world lack resources that would provide them with environmental 
+  preservation efforts, it would be unethical to assume the baseline for each 
+  country remains the same.
 
 It is important to consider that this data set has some limitations; the data
 dates back to 1750, all the way up to 2015. While this is a large data-set, it
@@ -198,7 +199,7 @@ because it inhibits the accuracy of the data representation.
 
 When addressing the challenge of climate change, technologists, designers, and
 Policymakers are the result of addressing tangible solutions for the future of
-climate change and how we understand its data. The fusion of innovative
+climate change and how data about it is understood. The fusion of innovative
 technologies with sustainable design that is supported and enforced by effective
 policies ensures the acceleration of the ways sustainable practices across the
 globe will ensure a more environmentally-conscious future.
@@ -256,48 +257,46 @@ a significant change, with an average increase of approximately
 `r avg_global_temp_change`°C. In 1752, the minimum average temperature was
 recorded at `r lowest_global_temp`°C, while in 2015, the maximum average
 temperature reached `r highest_global_temp`°C. A notable temperature of `r median_global_temp`°C was observed in 1906 as the median average temperature
-during this period. Finally, we can calculate the mean of these temperatures:
-Mean temperature = (1752 * 5.779833 + 2015 * 9.831 + 1906 * 8.379083) /
-(1752 + 2015 + 1906). This equation gives us a mean temperature finding of
-approximately 8.04 degrees Celsius.
-Overall, this means that given the values found in our data set, the overall
-mean temperature for the years ranging from 1750-2015 is roughly 8.04 degrees
-Celsius. 
+during this period. Finally, the mean of these temperatures can be calculated:
+\[\bar{X} =
+\frac{{1752 \times 5.779833 + 2015 \times 9.831 + 1906 \times 8.379083}}
+{{1752 + 2015 + 1906}}\]. This equation gives a mean temperature finding of
+approximately 8.04 degrees Celsius. Overall, from the given values found in the
+data set, the overall mean temperature for the years ranging from 1750-2015 is
+roughly 8.04°C. 
 
-We found:
+The data shows:
 
 * Between 1750 to 2015 the average change in land temperature globally is: 
-`r avg_global_temp_change` C
+`r avg_global_temp_change`°C
 * The lowest global land average temperature since 1750 was in 1752 at 
-`r lowest_global_temp` C
+`r lowest_global_temp`°C
 * The highest global land average temperature since 1750 was in 2015 at 
-`r highest_global_temp` C
+`r highest_global_temp`°C
 * The median temperature globally by year occurred in 1906 and is 
-`r median_global_temp` C
+`r median_global_temp`°C
 * The average temperature between 1750 and 2015 was 
-`r average_global_temp` C
+`r average_global_temp`°C
 
-From the data visualizations, we noticed that temperatures increased across 
+From the data visualizations, it is clear that temperatures increased across 
 the globe since 1750. the greatest changes in temperature occurred in 
-cities located in northern Asian and East Europe.
-Furthermore, the velocity of temperature change has been consistently above 0 
-from 1750 to 2015 meaning that average temperatures have been increasing yearly.
-We can can also see that temperature change was decelerating 
-from 1750 to around 1930, but from 1930 to 2015, temperature change suddenly
-began to accelerate. 
-Additionally, we can see that the uncertainty of data begins to 
-steadily decrease over time as technology for temperature data collection tools 
-improved continuously.
-Finally, we noticed that while North America and Asia have similar
-latitudes, the difference between average temperature varies significantly with
-Asia at around ~10C while North America has an average temperature at
-around ~5C.
+cities located in northern Asian and East Europe. Furthermore, the velocity of
+temperature change has been consistently above 0°C from 1750 to 2015 meaning
+average temperatures have been increasing yearly. Temperature change was also 
+decelerating from 1750 to around 1930, but from 1930 to 2015, temperature change
+suddenly began to accelerate, around the same time as the automobile became
+common. Over time the uncertainty of data begins to steadily decrease as
+technology for temperature collection tools improved continuously. While North
+America and Asia have similar latitudes, the difference between average
+temperature varies significantly with Asia at around ~10°C while North America
+has an average temperature at around ~5°C.
 
 ### Table
 
-This table is included to give a more detailed understanding of our global data
-summary statistics, this table includes average land and sea temperatures as
-well as the confidence interval for each calculation.
+This table of Global Temperature Summary Statistics is included to give a more 
+detailed understanding of the severity of climate change, this table includes
+average land and sea temperatures as well as the aggregated confidence interval
+for each calculation.
 
 ```{r, echo = FALSE, message = FALSE, warning = FALSE}
 source("analysis.R", local = knitr::knit_global())
@@ -307,24 +306,28 @@ global_summary_table <- global_annual_summary() %>%
   reframe(
     `Date` = dt,
     `Event` = event_type,
-    `LandTemp` = round(LandAverageTemperature, 2),
-    `TempConfidence` = round(LandAverageTemperatureUncertainty, 2),
-    `MaxTemp` = round(LandMaxTemperature, 2),
-    `MaxTempConfidence` = round(LandMaxTemperatureUncertainty, 2),
-    `MinTemperature` = round(LandMinTemperature, 2),
-    `MinTempConfidence` = round(LandMinTemperatureUncertainty, 2)
+    `Land.Temp` = round(LandAverageTemperature, 2),
+    `Temp.Confidence` = round(LandAverageTemperatureUncertainty, 2),
+    `Max.Temp` = round(LandMaxTemperature, 2),
+    `Max.Temp.Confidence` = round(LandMaxTemperatureUncertainty, 2),
+    `Min.Temperature` = round(LandMinTemperature, 2),
+    `Min.Temp.Confidence` = round(LandMinTemperatureUncertainty, 2)
   )
-knitr::kable(global_summary_table)
+knitr::kable(
+  global_summary_table,
+  col.names = gsub("[.]", " ", names(global_summary_table))
+)
 ```
 
 ### Chart 1: Heat Map / Bubble Chart on World Map
 
-These two maps are included to provide an overview of the current situation of
-our climate. The *Average Temperature By Country* visualization shows
+The two maps included provide an overview of the current situation of climate 
+data as of 2015. The *Average Temperature By Country* visualization shows
 average temperatures of each country around the world in Celsius (2015). 
-The second visualization, *City Temperature Changes*, provides an
-idea of changes of temperature over time. The map shows average
-temperature changes in each city from 1750 to 2015.
+The second visualization, *City Temperature Changes*, provides an idea of
+changes of temperature over time. The map shows average temperature changes in
+each city from 1850 to 2013 since reliable data outside that range was not
+included in the Berkeley Data.
 
 ```{r, echo = FALSE, message = FALSE, warning = FALSE}
 library(tidyverse) # data wrangling
@@ -340,37 +343,43 @@ temp_map
 city_plot
 ```
 
-From the first visualization shows that countries near the equator tend to
-have higher temperatures (we plan on including a slider widget in shiny so
-that we can visualize average temperatures over time). The second visualization
-shows average change in temperature between 1750 and 2015 in major cities. 
-While temperatures increased across the globe, the greatest changes in 
-temperature occurred in cities located in northern Asia and East Europe.
+The first visualization shows that countries near the equator currently have
+higher temperatures than countries near the poles (an interactive version is
+planned including a slider widget in shiny to visualize other years). The second
+visualization shows average change in temperature between 1850 and 2013 in major
+cities (with another interactive time interval widget planned in shiny). While
+temperatures increased across the globe, the greatest changes in temperature 
+occurred in cities located in northern Asia and eastern Europe.
 
 ### Chart 2: Scatterplot with Bubbles
 
-This scatter plot is included to show the velocity of temperature change 
-over the years along with the certainty of the data. A loess regression is also
-included to help visualize the change in velocity of temperature change over
-time (acceleration of temperature change). This can provide insight on not only
-the overall trend of temperature change, but also show changes in temperature
-collection technology.
+This scatter plot, *Velocity in Temperature Change Over Time*, is included to 
+show the velocity of temperature change over the years along with the certainty
+of the data. A loess regression is also included to help visualize the change in
+velocity of temperature change over time (acceleration of temperature change).
+This can provide insight on not only the overall trend of temperature change,
+but also show changes in temperature collection technology.
 
 ```{r, echo = FALSE, message = FALSE, warning = FALSE, code = readLines("chartTest.R")}
 ```
 
-From this scatter plot, we can see that the velocity of temperature change
-is consistently above 0 meaning that it is on average increasing yearly.
-However, we can can also see that temperature change was decelerating 
-from 1750 to around 1930. From 1930 to 2015, temperature change began to 
-accelerate. Additionally, we can see that the uncertainty of data begins to 
-steadily decrease over time as technological advancements are made.
+From the plot "Velocity in Temperature Change Over Time", the velocity of 
+temperature change is consistently above zero, meaning that it is on average 
+increasing yearly while the uncertainty of data is steadily decreasing over time
+as technological advancements are made. Note that the recorded temperatures
+before 1850 have confidence intervals that would not be able to detect a one
+degree change in global temperature. Temperature change was decelerating from
+1750 to around 1930, however global temperatures were still increasing. From
+1930 to 2015, temperature change began to accelerate. At this rate of
+acceleration, it is no surprise 2023 is shaping up to be the hottest year in 
+150,000 years.
 
 ### Chart 3: Bar Graph
 
-This bar chart is included to compare average temperatures of each continent.
-The comparison can allow for more detailed examination of differences in 
-temperature between continents that are a similar distance from the equator.
+The plot *Average Temperature by Continent*, is included to compare average 
+temperatures of each continent from 1850-2013. This comparison can allow for
+more detailed examination of differences in temperature between continents that 
+are a similar distance from the equator.
 
 ```{r, echo = FALSE, message = FALSE, warning = FALSE, code = readLines("chart2.R")}
 ```
@@ -378,9 +387,9 @@ temperature between continents that are a similar distance from the equator.
 This visualization shows that while North America and Asia have similar
 latitudes, the difference between average temperature varies significantly with
 Asia at around ~10C while North America has an average temperature at
-around ~5C.
-As with the heat map of the world, we hope to enhance the amount of insight this
-visualization can give with widgets from shiny.
+around ~5C. As with the heat map of the world, there are plans to enhance the 
+amount of insight this visualization can give with widgets from shiny to include
+custom time intervals.
 
 ### Citations
 

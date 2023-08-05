@@ -59,12 +59,19 @@ city_plot <- ggplot() +
     )) +
   scale_size_continuous(range = c(0.1, 1)) +  # Adjust the range of bubble sizes
   labs(title = "City Temperature Changes",
-       subtitle = "Change in city temperatures from 1850-2013", # TODO: Not viz
+       subtitle = "Change in city temperatures from 1850-2013", 
        x = "Longitude",
        y = "Latitude",
        size = "Temperature Uncertainty", # TODO: This is not showing up on chart
        color = "Temperature Difference") +
   theme_minimal() + blank_theme + coord_fixed()
 
-city_plot <- ggplotly(city_plot)
-
+city_plot <- ggplotly(city_plot) %>%
+  layout(
+    title = list(text = paste0(
+      'City Temperature Changes',
+      '<br>',
+      '<sup>',
+      'Change in city temperatures from 1850-2013',
+      '</sup>'
+    )))

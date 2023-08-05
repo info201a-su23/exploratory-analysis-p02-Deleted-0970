@@ -120,4 +120,12 @@ temp_map <- ggplot(data = world_temp_map) +
   blank_theme
 
 # plotly for interactivity :D
-temp_map <- ggplotly(temp_map)
+temp_map <- ggplotly(temp_map) %>%
+  layout(
+    title = list(text = paste0(
+      'Average Temperature By Country',
+      '<br>',
+      '<sup>',
+      'Average Temperatures for each country in 2015',
+      '</sup>'
+    )))

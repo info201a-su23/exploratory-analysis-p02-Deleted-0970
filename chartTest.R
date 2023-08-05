@@ -37,4 +37,12 @@ vel_plot <- ggplot(
   geom_smooth(method = "loess", formula = y ~ x, se = FALSE)
 
 # plotly to make it interactive :D
-ggplotly(vel_plot)
+ggplotly(vel_plot) %>%
+  layout(
+    title = list(text = paste0(
+      'Velocity of Temperature Change Over Time',
+      '<br>',
+      '<sup>',
+      'Change in global temperatures yearly from 1750-2013',
+      '</sup>'
+    )))
