@@ -3,8 +3,7 @@ library(tidyverse)
 # Read data into file
 global_temp <- read_csv("data/GlobalTemperatures.csv")
 country_temp <- read_csv("data/GlobalLandTemperaturesByCountry.csv")
-annual_city_temp <- read_csv("CityAnnualTemps.csv") %>%
-  mutate(dt = as.Date(dt))
+annual_city_temp <- read_csv("CityAnnualTemps.csv")
 
 # Get dimensions
 get_dim <- function(){
@@ -56,7 +55,7 @@ get_col_str <- function(){
 # Helper functions:
 global_temp_helper <- function(temp_data){
   temp <- temp_data %>%
-    group_by(dt = as.Date(floor_date(dt, 'year'))) %>%
+    group_by(dt = (floor_date(dt, 'year'))) %>%
     summarise(
       LandAverageTemperature = mean(LandAverageTemperature, na.rm = TRUE),
       LandAverageTemperatureUncertainty = mean(LandAverageTemperatureUncertainty,
@@ -80,7 +79,7 @@ global_temp_helper <- function(temp_data){
 
 country_temp_helper <- function(temp_data){
   temp <- temp_data %>%
-    mutate(dt = as.Date(floor_date(dt, 'year'))) %>%
+    mutate(dt = (floor_date(dt, 'year'))) %>%
     group_by(Country, dt) %>%
     summarise(
       MaxAverageTemperature = max(AverageTemperature, na.rm = TRUE),
