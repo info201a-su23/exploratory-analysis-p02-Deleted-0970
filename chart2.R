@@ -28,24 +28,46 @@ selected_continents <- c(
   "South America"
   )
 
+continent_lat <- data.frame(
+  Continent = c(
+    "Europe",
+    "Africa",
+    "Asia",
+    "Antarctica",
+    "Oceania",
+    "North America",
+    "South America"
+  ),
+  lat = c(
+    54.5260,
+    8.7832,
+    34.0479,
+    -82.8628,
+    -25.2744,
+    37.0902,
+    -14.2350
+  )
+)
+
 continent_temp <- annual_country_temp %>%
   filter(Country %in% selected_continents) %>%
-  filter(dt == max(dt))
+  filter(dt == max(dt)) %>%
+  rename(Continent = Country) %>%
+  left_join(continent_lat, by = "Continent")
 
 temp_bar <- ggplot(
   data = continent_temp, 
-  aes(x = Country, y = AverageTemperature, fill = AverageTemperature)
+  aes(x = Continent, y = AverageTemperature, fill = lat)
   ) +
-  geom_bar(stat = "identity", width = 0.7,
-           position = position_dodge(width = 2)) +  
+  geom_bar(stat = "identity", width = 0.7) +  
   #stat = "identity" to plot the actual values rather than count
   scale_fill_gradient(low = "blue", high = "red") +
   labs(title = "Average Temperature by Continent (C)",
        x = "Continent",
        y = "Average Temperature",
-       fill = "Average Temperature") +
-  theme_light()
-
+       fill = "Latitude") +
+  theme_light() +
+  theme(axis.text.x = element_text(angle = 25, hjust = 1))
 ggplotly(temp_bar)
 
   

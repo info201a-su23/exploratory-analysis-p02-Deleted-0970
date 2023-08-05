@@ -20,7 +20,16 @@ Summer 2023
 
 ### Abstract
 
-Providing a data visualization that presents a comprehensive investigation into the impact of climate change between the years 1750 and 2015, employing temporal and trend-line mapping techniques to explore the evolution of climate-related parameters, and provide discernment for the individual factors influencing climate change over time and their respective influence. The objective of this data visualization is to enhance understanding of the drivers of climate change, enabling more accurate projections of future climate scenarios. Considering the prevailing climate emergency, a motivation for this data visualization project is to provide valuable insights towards cultivating a more environmentally-conscious world.
+Providing a data visualization that presents a comprehensive investigation into 
+the impact of climate change between the years 1750 and 2015, employing temporal
+and trend-line mapping techniques to explore the evolution of climate-related
+parameters, and provide discernment for the individual factors influencing
+climate change over time and their respective influence. The objective of this
+data visualization is to enhance understanding of the drivers of climate change,
+enabling more accurate projections of future climate scenarios. Considering the
+prevailing climate emergency, a motivation for this data visualization project
+is to provide valuable insights towards cultivating a more
+environmentally-conscious world.
 
 ### Keywords
 
@@ -28,29 +37,90 @@ Providing a data visualization that presents a comprehensive investigation into 
 
 ### Introduction  
 
-The question that this project will answer is how climate temperature has changed over time. Climate change is an important issue globally, and being able to understand the progression of climate change is important data for creating action. To address this question, a series of visualizations derived from a dataset will be created; a temporal map, showing a heatmap laid over a world map, a bubble chart that represents the difference in heat by year, an area graph representing temperature over time with a slider to alter the time interval, and a line chart that depicts the overall velocity of temperature change over time from 1750 to now, knowing that earth temperatures have been relatively stable before 1750 throughout recent human history. 
-The velocity at which the temperature is changing overall is also of concern, because it can be used to set the trendline for making future predictions. As a result, there are many factors the data provides that are worth identifying such as: 
+The question that this project will answer is how climate temperature has
+changed over time. Climate change is an important issue globally, and being able
+to understand the progression of climate change is important data for creating
+action. To address this question, a series of visualizations derived from a
+dataset will be created; a temporal map, showing a heatmap laid over a world
+map, a bubble chart that represents the difference in heat by year, an area
+graph representing temperature over time with a slider to alter the time
+interval, and a line chart that depicts the overall velocity of temperature
+change over time from 1750 to now, knowing that earth temperatures have been
+relatively stable before 1750 throughout recent human history. 
+The velocity at which the temperature is changing overall is also of concern,
+because it can be used to set the trendline for making future predictions. As
+a result, there are many factors the data provides that are worth identifying
+such as: 
 
 * How has global temperature changed over time?
 * What is the velocity of temperature change throughout time?
-* Which continent/country/city experienced the greatest changes in temperature over time?
+* Which continent/country/city experienced the greatest changes in temperature
+over time?
 * Other questions worth considering while exploring this dataset include:
-* What major historical events have taken place in this timeline that may have influenced the climate?
+* What major historical events have taken place in this timeline that may have
+influenced the climate?
 * What does the trend in temperature suggest about the future?
 
-Finding answers to these questions is important since they will ensure scientific accountability, raise awareness in large audiences, maintain documentation of historical data, and hopefully advocate for international collaboration. It is important to consider that this data set has some limitations; the data dates back to 1750, all the way up to 2017. While this is a large dataset, it isn’t necessarily the most updated representation of the climate today since it excludes the previous six years of data. Therefore a trendline for future predictions may be helpful to use and compare with current temperatures for accuracy. This dataset lacks granular data for every place on the globe, a limitation of this dataset. The missing data is notable because it inhibits the accuracy of the data representation and it will be countered by supplying more refined data on the location and date of significant temperature changes over time by cities.
+Finding answers to these questions is important since they will ensure
+scientific accountability, raise awareness in large audiences, maintain
+documentation of historical data, and hopefully advocate for international
+collaboration. It is important to consider that this data set has some
+limitations; the data dates back to 1750, all the way up to 2017. While this is
+a large dataset, it isn’t necessarily the most updated representation of the
+climate today since it excludes the previous six years of data. Therefore a
+trendline for future predictions may be helpful to use and compare with current
+temperatures for accuracy. This dataset lacks granular data for every place on
+the globe, a limitation of this dataset. The missing data is notable because it
+inhibits the accuracy of the data representation and it will be countered by
+supplying more refined data on the location and date of significant temperature
+changes over time by cities.
 
 ### Related Work  
 
-The topic under investigation pertains to the temporal rate of climate temperature change. Given the contentious nature of climate change, a plethora of 'information' on its effects and causes exists. Accessing reliable sources such as academic journals or the platforms of esteemed scientific organizations like the UN, NOAA, or NASA is recommended.
+The topic under investigation pertains to the temporal rate of climate
+temperature change. Given the contentious nature of climate change, a plethora
+of 'information' on its effects and causes exists. Accessing reliable sources
+such as academic journals or the platforms of esteemed scientific organizations
+like the UN, NOAA, or NASA is recommended.
 
-* The **UN** provides a ‘[Climate Action Note](https://www.unep.org/explore-topics/climate-action/what-we-do/climate-action-note/state-of-climate.html)’, which provides data maps on the increase of emissions since 1990. This data set provides interactive data maps on climate change per total emissions and capita emissions, by country. What is most interesting about this particular data set is that they provide economic data on the countries contributing to climate change as well. This is beneficial in understanding the very real economic disparities between countries, and how that affects carbon emissions. For example, by analyzing the economic welfare of each individual country in the data set, the UN found that the poorest countries only make up half of carbon emissions. The top 1% of the globe represents more than twice these emissions. This information is useful in understanding how to disseminate resources and support to countries in need (Benjamin 2023).
+* The **UN** provides a ‘[Climate Action Note](https://www.unep.org/explore-topics/climate-action/what-we-do/climate-action-note/state-of-climate.html)’, which provides data maps on the increase of emissions since
+1990. This data set provides interactive data maps on climate change per total
+emissions and capita emissions, by country. What is most interesting about this
+particular data set is that they provide economic data on the countries
+contributing to climate change as well. This is beneficial in understanding
+the very real economic disparities between countries, and how that affects
+carbon emissions. For example, by analyzing the economic welfare of each
+individual country in the data set, the UN found that the poorest countries only
+make up half of carbon emissions. The top 1% of the globe represents more than
+twice these emissions. This information is useful in understanding how to
+disseminate resources and support to countries in need (Benjamin 2023).
 
-* The **NOAA** provides a '[Global Climate Dashboard](https://www.climate.gov/climatedashboard)', which provides 18 different line graphs ranging from Greenhouse Gases, Sea Level, and Surface Temperature to Ocean Heat, Spring Snow, and sunlight by metric. There are two indicator options, filtered between ‘climate change’ and ‘natural variability’ which increases the confidence in correlation between the state of the climate crisis which accelerated at a rate that went beyond what was natural for that particular time period or environment.
+* The **NOAA** provides a '[Global Climate Dashboard](https://www.climate.gov/climatedashboard)', which provides 18
+different line graphs ranging from Greenhouse Gases, Sea Level, and Surface
+Temperature to Ocean Heat, Spring Snow, and sunlight by metric. There are two
+indicator options, filtered between ‘climate change’ and ‘natural variability’ 
+which increases the confidence in correlation between the state of the climate 
+crisis which accelerated at a rate that went beyond what was natural for that 
+particular time period or environment.
 
-* **NASA** provides data on the '[Vital Signs of our Planet](https://climate.nasa.gov/)', the data provides information on Carbon Dioxide (parts per million), Global Temperature (degrees in Celsius since the pre industrial period), Methane (parts per billion), Arctic Sea Ice Extent (min percent per decade since ‘79), Ice sheets(by billion metric ton per year), Sea Level (inches since 1993), and Ocean Warming (zetta-joules since 1955). By extracting these indicators, NASA provides a closer look at the different natural elements that are affected, and how drastically they have changed over time. When opened, each data-set provides either a trend-line graph, a regular line graph, or a temporal world map that is interactive.
+* **NASA** provides data on the '[Vital Signs of our Planet](https://climate.nasa.gov/)'
+, the data provides information on Carbon Dioxide (parts per million), Global
+Temperature (degrees in Celsius since the pre industrial period), Methane
+(parts per billion), Arctic Sea Ice Extent (min percent per decade since ‘79),
+Ice sheets(by billion metric ton per year), Sea Level (inches since 1993), and
+Ocean Warming (zetta-joules since 1955). By extracting these indicators, NASA
+provides a closer look at the different natural elements that are affected, and
+how drastically they have changed over time. When opened, each data-set provides
+either a trend-line graph, a regular line graph, or a temporal world map that is
+interactive.
 
-All of these articles provide additional supporting data and impact to the questions we are trying to answer, but more than that, they are all coming from major scientific organizations that are credible, reliable, and actively involved in providing systemic solutions to the climate crisis. The goal of this project is to create data visualizations which contribute to the accessibility of climate data information, in a way that is readable and understandable to an audience.
+All of these articles provide additional supporting data and impact to the
+questions we are trying to answer, but more than that, they are all coming from
+major scientific organizations that are credible, reliable, and actively
+involved in providing systemic solutions to the climate crisis. The goal of this
+project is to create data visualizations which contribute to the accessibility
+of climate data information, in a way that is readable and understandable to an
+audience.
 
 
 ### The Dataset
@@ -63,9 +133,23 @@ Dataset biography:
 
 Data collection methodology:
 
-* There are several different ways this data was collected because the data dates all the way back to 1750, it is difficult to have consistent measurement. Early periods of temperature data were gathered using mercury thermometers, post 1940’s construction moved weather stations around, and the 1980’s introduced a device known to have a cooling bias; digital thermometers. There were 16 different data archives with a whopping 1.6 billion individual temperature records reported. Berkeley Earth divided the data into categories based on min, max, confidence intervals, global scale, by specific location, and by date.
+* There are several different ways this data was collected because the data
+dates all the way back to 1750, it is difficult to have consistent measurement.
+Early periods of temperature data were gathered using mercury thermometers, post
+1940’s construction moved weather stations around, and the 1980’s introduced a
+device known to have a cooling bias; digital thermometers. There were 16
+different data archives with a whopping 1.6 billion individual temperature
+records reported. Berkeley Earth divided the data into categories based on min,
+max, confidence intervals, global scale, by specific location, and by date.
 
-* This data was collected to identify location indicators affecting climate temperature change over time. Authors Berkeley Earth and Kristen Sissener acknowledge the ongoing debate on whether climate change is a real issue, and collected this wide range of temporal data by location in order to represent a seemingly unbiased data set for analysis. By providing data based on location rather than population per capita, the data eradicates any room for socioeconomic debate and only provides space to analyze the correlation between date and location in temporal history.
+* This data was collected to identify location indicators affecting climate
+temperature change over time. Authors Berkeley Earth and Kristen Sissener
+acknowledge the ongoing debate on whether climate change is a real issue, and
+collected this wide range of temporal data by location in order to represent a
+seemingly unbiased data set for analysis. By providing data based on location
+rather than population per capita, the data eradicates any room for
+socioeconomic debate and only provides space to analyze the correlation between
+date and location in temporal history.
 
 Dimensions of dataset
 ```{r, echo = FALSE, message = FALSE, warning = FALSE}
@@ -79,37 +163,106 @@ Some ethical questions considered when working with this data include...
 
 * Is the data representative of the global population?
 
-  * Considering that there is no information on each individual place across the world, the data will not provide very high confidence of causation or correlation between environmental placement and its impact. In order to do so, there would need to be granular data provided for each and every individual city, state, and country worldwide. Knowing that this data set spans across such a large amount of time, it is fair to assume this would not be a possibility to provide, however the ethical dilemma of representation within the data-set still very much stands.
+  * Considering that there is no information on each individual place across
+  the world, the data will not provide very high confidence of causation or
+  correlation between environmental placement and its impact. In order to do so,
+  there would need to be granular data provided for each and every individual
+  city, state, and country worldwide. Knowing that this data set spans across
+  such a large amount of time, it is fair to assume this would not be a
+  possibility to provide, however the ethical dilemma of representation within
+  the data-set still very much stands.
 
 * Does the data have a motive or an agenda behind it?
   
-  * Knowing that climate change is not just a scientific problem, but also a highly politicized issue forces the consideration of integrity behind the data collection. What is being left out? How do the indicators selected create gaps in our data set? Are these gaps intentional or causal? It is important to consider these questions when approaching these data sets in order to consider the marginalized groups. Because we know that the poorest countries in the world lack resources that would provide them with environmental preservation efforts, it would be unethical to assume the baseline for each country remains the same.
+  * Knowing that climate change is not just a scientific problem, but also a
+  highly politicized issue forces the consideration of integrity behind the data
+  collection. What is being left out? How do the indicators selected create gaps
+  in our data set? Are these gaps intentional or causal? It is important to
+  consider these questions when approaching these data sets in order to consider
+  the marginalized groups. Because we know that the poorest countries in the
+  world lack resources that would provide them with environmental preservation
+  efforts, it would be unethical to assume the baseline for each country remains
+  the same.
 
-It is important to consider that this data set has some limitations; the data dates back to 1750, all the way up to 2015. While this is a large data-set, it isn’t necessarily the most updated representation of the climate today since it excludes the previous six years of data. Therefore a trend-line for future predictions may be helpful to use and compare with current temperatures for accuracy. This data-set also lacks granular data for all surface locations on the globe, another limitation of this data-set. The missing data is notable because it inhibits the accuracy of the data representation.
+It is important to consider that this data set has some limitations; the data
+dates back to 1750, all the way up to 2015. While this is a large data-set, it
+isn’t necessarily the most updated representation of the climate today since it
+excludes the previous six years of data. Therefore a trend-line for future
+predictions may be helpful to use and compare with current temperatures for
+accuracy. This data-set also lacks granular data for all surface locations on
+the globe, another limitation of this data-set. The missing data is notable
+because it inhibits the accuracy of the data representation.
 
 
 ### Implications
 
-When addressing the challenge of climate change, technologists, designers, and Policymakers are the result of addressing tangible solutions for the future of climate change and how we understand its data. The fusion of innovative technologies with sustainable design that is supported and enforced by effective policies ensures the acceleration of the ways sustainable practices across the globe will ensure a more environmentally-conscious future.
+When addressing the challenge of climate change, technologists, designers, and
+Policymakers are the result of addressing tangible solutions for the future of
+climate change and how we understand its data. The fusion of innovative
+technologies with sustainable design that is supported and enforced by effective
+policies ensures the acceleration of the ways sustainable practices across the
+globe will ensure a more environmentally-conscious future.
 
-* Technologists: Knowing the climate is in a state of emergency, technologists have the resources, and understanding, and will play a crucial role in developing sustainable solutions and green technologies. This includes renewable energy sources, energy-efficient infrastructure, climate monitoring systems, and advanced data analytics to inform decision-making.
-* Designers: Sustainable design practices will be essential to mitigate the impact of climate change. Designers should prioritize eco-friendly materials, energy-efficient buildings, and resilient infrastructure to adapt to changing environmental conditions.
-* Policymakers: Policymakers have the responsibility to implement effective climate policies, promote international cooperation, and enforce environmental regulations. This may include carbon pricing, emission reduction targets, and incentives for adopting clean technologies.
+* Technologists: Knowing the climate is in a state of emergency, technologists
+have the resources, and understanding, and will play a crucial role in
+developing sustainable solutions and green technologies. This includes renewable
+energy sources, energy-efficient infrastructure, climate monitoring systems, and
+advanced data analytics to inform decision-making.
+* Designers: Sustainable design practices will be essential to mitigate the
+impact of climate change. Designers should prioritize eco-friendly materials,
+energy-efficient buildings, and resilient infrastructure to adapt to changing
+environmental conditions.
+* Policymakers: Policymakers have the responsibility to implement effective
+climate policies, promote international cooperation, and enforce environmental
+regulations. This may include carbon pricing, emission reduction targets, and
+incentives for adopting clean technologies.
 
 ### Limitations & Challenges
 
-Possible limitations or problems when working with this particular dataset are concerns of the locations being represented. Knowing that this data set does not have granular time series data for each individual city, state, or country as it is aggregated monthly. It is important to consider how this presents difficulties when deciphering events with the highest or lowest impact on the climate. Alternatively, the information provided comes from a multitude of different measurement sources dating all the way back to the pre-industrial revolution. The ways in which temperature measurements are gathered today are different than they were in 1750, and the results of these measurements reflect that. The authors of this data set mention that they collected data from measurements based off of very dated instruments, such as mercury thermometers of the pre-industrial age, and the digital thermometers used in the late 1900’s, which are known to have a cooling bias.
+Possible limitations or problems when working with this particular dataset are
+concerns of the locations being represented. Knowing that this data set does not
+have granular time series data for each individual city, state, or country as it
+is aggregated monthly. It is important to consider how this presents
+difficulties when deciphering events with the highest or lowest impact on the
+climate. Alternatively, the information provided comes from a multitude of
+different measurement sources dating all the way back to the pre-industrial
+revolution. The ways in which temperature measurements are gathered today are
+different than they were in 1750, and the results of these measurements reflect
+that. The authors of this data set mention that they collected data from
+measurements based off of very dated instruments, such as mercury thermometers
+of the pre-industrial age, and the digital thermometers used in the late 1900’s,
+which are known to have a cooling bias.
 
-These concerns question not only the integrity of the data’s accuracy and precision, but also the invisible power structures that it represents. It is clear not every location was capable of being held accountable for proper measuring techniques, therefore the data collected must consider those disparities. There is missing data for many countries and cities before 1850, there is even more missing data for Antarctica. Additionally, considering the main question to answer is how temperature of the climate has changed over time, the data limits or completely dismisses the ability to extract individual variables that also represent environmental indicators of significant climate change such as ocean heat levels or snow melt in the spring. This is important because these factors are crucial in determining temperature change over time, arguably more so than analyzing indicators based on location.
+These concerns question not only the integrity of the data’s accuracy and
+precision, but also the invisible power structures that it represents. It i
+s clear not every location was capable of being held accountable for proper
+measuring techniques, therefore the data collected must consider those
+disparities. There is missing data for many countries and cities before 1850,
+there is even more missing data for Antarctica. Additionally, considering the
+main question to answer is how temperature of the climate has changed over time,
+the data limits or completely dismisses the ability to extract individual
+variables that also represent environmental indicators of significant climate
+change such as ocean heat levels or snow melt in the spring. This is important
+because these factors are crucial in determining temperature change over time,
+arguably more so than analyzing indicators based on location.
 
 ### Summary Information
 ```{r, echo = FALSE, include = FALSE}
 source("summary.R")
 ```
 
-Between the years 1750 and 2015, the average global temperature has experienced a significant change, with an average increase of approximately `r avg_global_temp_change`°C. In 1752, the minimum average temperature was recorded at `r lowest_global_temp`°C, while in 2015, the maximum average temperature reached `r highest_global_temp`°C. A notable temperature of `r median_global_temp`°C was observed in 1906 as the median average temperature during this period. Finally, we can calculate the mean of these temperatures:
-Mean temperature = (1752 * 5.779833 + 2015 * 9.831 + 1906 * 8.379083) / (1752 + 2015 + 1906). This equation gives us a mean temperature finding of approximately 8.04 degrees Celsius.
-Overall, this means that given the values found in our data set, the overall mean temperature for the years ranging from 1750-2015 is roughly 8.04 degrees Celsius. 
+Between the years 1750 and 2015, the average global temperature has experienced
+a significant change, with an average increase of approximately
+`r avg_global_temp_change`°C. In 1752, the minimum average temperature was
+recorded at `r lowest_global_temp`°C, while in 2015, the maximum average
+temperature reached `r highest_global_temp`°C. A notable temperature of `r median_global_temp`°C was observed in 1906 as the median average temperature
+during this period. Finally, we can calculate the mean of these temperatures:
+Mean temperature = (1752 * 5.779833 + 2015 * 9.831 + 1906 * 8.379083) /
+(1752 + 2015 + 1906). This equation gives us a mean temperature finding of
+approximately 8.04 degrees Celsius.
+Overall, this means that given the values found in our data set, the overall
+mean temperature for the years ranging from 1750-2015 is roughly 8.04 degrees
+Celsius. 
 
 We found:
 
@@ -124,9 +277,27 @@ We found:
 * The average temperature between 1750 and 2015 was 
 `r average_global_temp` C
 
+From the data visualizations, we noticed that temperatures increased across 
+the globe since 1750. the greatest changes in temperature occurred in 
+cities located in northern Asian and East Europe.
+Furthermore, the velocity of temperature change has been consistently above 0 
+from 1750 to 2015 meaning that average temperatures have been increasing yearly.
+We can can also see that temperature change was decelerating 
+from 1750 to around 1930, but from 1930 to 2015, temperature change suddenly
+began to accelerate. 
+Additionally, we can see that the uncertainty of data begins to 
+steadily decrease over time as technology for temperature data collection tools 
+improved continuously.
+Finally, we noticed that while North America and Asia have similar
+latitudes, the difference between average temperature varies significantly with
+Asia at around ~10C while North America has an average temperature at
+around ~5C.
+
 ### Table
 
-This table is included to give a more detailed understanding of our global data summary statistics, this table includes average land and sea temperatures as well as the confidence interval for each calculation.
+This table is included to give a more detailed understanding of our global data
+summary statistics, this table includes average land and sea temperatures as
+well as the confidence interval for each calculation.
 
 ```{r, echo = FALSE, message = FALSE, warning = FALSE}
 source("analysis.R", local = knitr::knit_global())
@@ -146,13 +317,14 @@ global_summary_table <- global_annual_summary() %>%
 knitr::kable(global_summary_table)
 ```
 
-### Chart 1
+### Chart 1: Heat Map / Bubble Chart on World Map
 
-Include a chart
-
-Describe why you chose this chart and what information it reveals
-
-Here's an example of how to run an R script inside an RMarkdown file:
+These two maps are included to provide an overview of the current situation of
+our climate. The *Average Temperature By Country* visualization shows
+average temperatures of each country around the world in Celsius (2015). 
+The second visualization, *City Temperature Changes*, provides an
+idea of changes of temperature over time. The map shows average
+temperature changes in each city from 1750 to 2015.
 
 ```{r, echo = FALSE, message = FALSE, warning = FALSE}
 library(tidyverse) # data wrangling
@@ -168,23 +340,47 @@ temp_map
 city_plot
 ```
 
-### Chart 2
+From the first visualization shows that countries near the equator tend to
+have higher temperatures (we plan on including a slider widget in shiny so
+that we can visualize average temperatures over time). The second visualization
+shows average change in temperature between 1750 and 2015 in major cities. 
+While temperatures increased across the globe, the greatest changes in 
+temperature occurred in cities located in northern Asian and East Europe.
 
-Include a chart
+### Chart 2: Scatterplot with Bubbles
 
-Describe why you chose this chart and what information it reveals
+This scatter plot is included to show the velocity of temperature change 
+over the years along with the certainty of the data. A loess regression is also
+included to help visualize the change in velocity of temperature change over
+time (acceleration of temperature change). This can provide insight on not only
+the overall trend of temperature change, but also show changes in temperature
+collection technology.
 
 ```{r, echo = FALSE, message = FALSE, warning = FALSE, code = readLines("chartTest.R")}
 ```
 
-### Chart 3
+From this scatter plot, we can see that the velocity of temperature change
+is consistently above 0 meaning that it is on average increasing yearly.
+However, we can can also see that temperature change was decelerating 
+from 1750 to around 1930. From 1930 to 2015, temperature change began to 
+accelerate. Additionally, we can see that the uncertainty of data begins to 
+steadily decrease over time as technological advancements are made.
 
-Include a chart
+### Chart 3: Bar Graph
 
-Describe why you chose this chart and what information it reveals
+This bar chart is included to compare average temperatures of each continent.
+The comparison can allow for more detailed examination of differences in 
+temperature between continents that are a similar distance from the equator.
 
 ```{r, echo = FALSE, message = FALSE, warning = FALSE, code = readLines("chart2.R")}
 ```
+
+This visualization shows that while North America and Asia have similar
+latitudes, the difference between average temperature varies significantly with
+Asia at around ~10C while North America has an average temperature at
+around ~5C.
+As with the heat map of the world, we hope to enhance the amount of insight this
+visualization can give with widgets from shiny.
 
 ### Citations
 
