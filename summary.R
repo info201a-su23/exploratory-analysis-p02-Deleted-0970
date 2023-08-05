@@ -6,8 +6,6 @@ source("analysis.R")
 global_summary_table <- global_annual_summary()
 country_summary_table <- country_annual_summary()
 city_summary_table <- city_annual_summary()
-# this is producing error messages.
-
 
 # Calculating values for summary
 temp_store <- global_temp_change(1750, 2015)

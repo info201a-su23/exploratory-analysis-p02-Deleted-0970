@@ -1,6 +1,6 @@
 source("analysis.R") # access analysis.R methods and data
 library(tidyverse)
-# library(plotly) # for plotting
+library(plotly)
 
 # Organize Year data
 # global_temp <- annual_global_temp %>% 
@@ -36,14 +36,15 @@ temp_bar <- ggplot(
   data = continent_temp, 
   aes(x = Country, y = AverageTemperature, fill = AverageTemperature)
   ) +
-  geom_bar(stat = "identity") +  
+  geom_bar(stat = "identity", width = 0.7,
+           position = position_dodge(width = 2)) +  
   #stat = "identity" to plot the actual values rather than count
   scale_fill_gradient(low = "blue", high = "red") +
   labs(title = "Average Temperature by Continent (C)",
        x = "Continent",
        y = "Average Temperature",
        fill = "Average Temperature") +
-  theme_light() + coord_fixed()
+  theme_light()
 
 ggplotly(temp_bar)
 
