@@ -345,7 +345,7 @@ have higher temperatures (we plan on including a slider widget in shiny so
 that we can visualize average temperatures over time). The second visualization
 shows average change in temperature between 1750 and 2015 in major cities. 
 While temperatures increased across the globe, the greatest changes in 
-temperature occurred in cities located in northern Asian and East Europe.
+temperature occurred in cities located in northern Asia and East Europe.
 
 ### Chart 2: Scatterplot with Bubbles
 
