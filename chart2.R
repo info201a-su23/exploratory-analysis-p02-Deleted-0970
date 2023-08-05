@@ -49,9 +49,8 @@ continent_lat <- data.frame(
   )
 )
 
-continent_temp <- annual_country_temp %>%
+continent_temp <- country_avg_temp() %>%
   filter(Country %in% selected_continents) %>%
-  filter(dt == max(dt)) %>%
   rename(Continent = Country) %>%
   left_join(continent_lat, by = "Continent")
 
@@ -68,8 +67,13 @@ temp_bar <- ggplot(
        fill = "Latitude") +
   theme_light() +
   theme(axis.text.x = element_text(angle = 25, hjust = 1))
-ggplotly(temp_bar)
 
-  
-
-
+ggplotly(temp_bar) %>%
+  layout(
+    title = list(text = paste0(
+      'Average Temperature By Continent',
+      '<br>',
+      '<sup>',
+      'Average Temperatures for each continent from 1850-2013',
+      '</sup>'
+    )))
