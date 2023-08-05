@@ -103,18 +103,26 @@ Possible limitations or problems when working with this particular dataset are c
 These concerns question not only the integrity of the data’s accuracy and precision, but also the invisible power structures that it represents. It is clear not every location was capable of being held accountable for proper measuring techniques, therefore the data collected must consider those disparities. There is missing data for many countries and cities before 1850, there is even more missing data for Antarctica. Additionally, considering the main question to answer is how temperature of the climate has changed over time, the data limits or completely dismisses the ability to extract individual variables that also represent environmental indicators of significant climate change such as ocean heat levels or snow melt in the spring. This is important because these factors are crucial in determining temperature change over time, arguably more so than analyzing indicators based on location.
 
 ### Summary Information
+```{r, echo = FALSE, include = FALSE}
+source("summary.R")
+```
 
-Between the years 1750 and 2015, the average global temperature has experienced a significant change, with an average increase of approximately 1.11°C. In 1752, the minimum average temperature was recorded at 5.78°C, while in 2015, the maximum average temperature reached 9.83°C. A notable temperature of 8.38°C was observed in 1906 as the median average temperature during this period. Finally, we can calculate the mean of these temperatures:
+Between the years 1750 and 2015, the average global temperature has experienced a significant change, with an average increase of approximately `r avg_global_temp_change`°C. In 1752, the minimum average temperature was recorded at `r lowest_global_temp`°C, while in 2015, the maximum average temperature reached `r highest_global_temp`°C. A notable temperature of `r median_global_temp`°C was observed in 1906 as the median average temperature during this period. Finally, we can calculate the mean of these temperatures:
 Mean temperature = (1752 * 5.779833 + 2015 * 9.831 + 1906 * 8.379083) / (1752 + 2015 + 1906). This equation gives us a mean temperature finding of approximately 8.04 degrees Celsius.
 Overall, this means that given the values found in our data set, the overall mean temperature for the years ranging from 1750-2015 is roughly 8.04 degrees Celsius. 
 
 We found:
 
-* Between 1750 to 2015 the average change in land temperature globally is: 1.111636^^0 C
-* The lowest global land average temperature since 1750 was in 1752 at 5.779833^^0 C
-* The highest global land average temperature since 1750 was in 2015 at 9.831000^^0 C
-* The median temperature globally by year occurred in 1906 and is 8.379083^^0 C
-* The average temperature between 1750 and 2015 was 8.369337^^0 C
+* Between 1750 to 2015 the average change in land temperature globally is: 
+`r avg_global_temp_change` C
+* The lowest global land average temperature since 1750 was in 1752 at 
+`r lowest_global_temp` C
+* The highest global land average temperature since 1750 was in 2015 at 
+`r highest_global_temp` C
+* The median temperature globally by year occurred in 1906 and is 
+`r median_global_temp` C
+* The average temperature between 1750 and 2015 was 
+`r average_global_temp` C
 
 ### Table
 
@@ -128,12 +136,12 @@ global_summary_table <- global_annual_summary() %>%
   reframe(
     `Date` = dt,
     `Event` = event_type,
-    `LandTemp` = LandAverageTemperature,
-    `TempConfidence` = LandAverageTemperatureUncertainty,
-    `MaxTemp` = LandMaxTemperature,
-    `MaxTempConfidence` = LandMaxTemperatureUncertainty,
-    `MinTemperature` = LandMinTemperature,
-    `MinTempConfidence` = LandMinTemperatureUncertainty
+    `LandTemp` = round(LandAverageTemperature, 2),
+    `TempConfidence` = round(LandAverageTemperatureUncertainty, 2),
+    `MaxTemp` = round(LandMaxTemperature, 2),
+    `MaxTempConfidence` = round(LandMaxTemperatureUncertainty, 2),
+    `MinTemperature` = round(LandMinTemperature, 2),
+    `MinTempConfidence` = round(LandMinTemperatureUncertainty, 2)
   )
 knitr::kable(global_summary_table)
 ```
