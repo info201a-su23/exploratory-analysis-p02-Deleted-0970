@@ -36,5 +36,5 @@ vel_plot <- ggplot(
    scale_alpha_continuous(range = c(0.2, 1)) +
   geom_smooth(method = "loess", formula = y ~ x, se = FALSE)
 
-# plotly to make it interative :D
+# plotly to make it interactive :D
 ggplotly(vel_plot)
