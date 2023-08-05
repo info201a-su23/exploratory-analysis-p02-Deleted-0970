@@ -6,7 +6,7 @@ country_temp <- read_csv("data/GlobalLandTemperaturesByCountry.csv")
 annual_city_temp <- read_csv("CityAnnualTemps.csv")
 
 # Get dimensions
-get_dim <- function(){
+get_dim <- function() {
   # Number of rows:
   rows_global <- nrow(global_temp)
   rows_country <- nrow(country_temp)
@@ -26,7 +26,7 @@ get_dim <- function(){
 }
 
 # Get column names:
-get_colnames <- function(){
+get_colnames <- function() {
   colnames_global <- colnames(global_temp)
   colnames_country <- colnames(country_temp)
   colnames_city <- colnames(annual_city_temp)
@@ -40,7 +40,7 @@ get_colnames <- function(){
 }
 
 # Get the data types (does not return anything):
-get_col_str <- function(){
+get_col_str <- function() {
   coltypes_global <- str(global_temp)
   coltypes_country <- str(country_temp)
   coltypes_city <- str(annual_city_temp)
@@ -53,7 +53,7 @@ get_col_str <- function(){
 }
 
 # Helper functions:
-global_temp_helper <- function(temp_data){
+global_temp_helper <- function(temp_data) {
   temp <- temp_data %>%
     group_by(dt = (floor_date(dt, 'year'))) %>%
     summarise(
@@ -77,7 +77,7 @@ global_temp_helper <- function(temp_data){
   return(temp)
 }
 
-country_temp_helper <- function(temp_data){
+country_temp_helper <- function(temp_data) {
   temp <- temp_data %>%
     mutate(dt = (floor_date(dt, 'year'))) %>%
     group_by(Country, dt) %>%
@@ -94,7 +94,7 @@ country_temp_helper <- function(temp_data){
   return(temp)
 }
 
-reframe_by_global_event_type <- function(climate_data){
+reframe_by_global_event_type <- function(climate_data) {
   climate_data <- climate_data %>%
     reframe(
       dt,
@@ -111,7 +111,7 @@ reframe_by_global_event_type <- function(climate_data){
   return(climate_data)
 }
 
-reframe_by_country_event_type <- function(climate_data){
+reframe_by_country_event_type <- function(climate_data) {
   climate_data <- climate_data %>%
     reframe(
       dt,
@@ -125,7 +125,7 @@ reframe_by_country_event_type <- function(climate_data){
   return(climate_data)
 }
 
-reframe_by_city_event_type <- function(climate_data){
+reframe_by_city_event_type <- function(climate_data) {
   climate_data <- climate_data %>%
     reframe(
       dt,
@@ -148,7 +148,7 @@ annual_country_temp <- country_temp_helper(country_temp)
 
 # Questions to answer:
 # 1: How much have global land temperatures changed since 1750?
-global_temp_change <- function(start_year = 1750, end_year = 2015){
+global_temp_change <- function(start_year = 1750, end_year = 2015) {
   temp_change <- annual_global_temp %>%
     filter(dt == start_year | dt == end_year) %>%
     mutate_all(~ifelse(is.na(.), 0, .)) %>%
@@ -183,7 +183,7 @@ global_temp_change <- function(start_year = 1750, end_year = 2015){
 
 # 2: What are the min and max values in the global data-set?
 # 2.1: When the hottest average year globally since 1750 and how hot was it?
-global_max_avg_temp <- function(start_year = 1750, end_year = 2015){
+global_max_avg_temp <- function(start_year = 1750, end_year = 2015) {
   hottest_year <- annual_global_temp %>%
     filter(dt >= start_year & dt <= end_year) %>%
     filter(
@@ -195,7 +195,7 @@ global_max_avg_temp <- function(start_year = 1750, end_year = 2015){
 }
 
 # 2.2: When the coolest average year globally since 1750 and how hot was it?
-global_min_avg_temp <- function(start_year = 1750, end_year = 2015){
+global_min_avg_temp <- function(start_year = 1750, end_year = 2015) {
   coldest_year <- annual_global_temp %>%
     filter(dt >= start_year & dt <= end_year) %>%
     filter(LandAverageTemperature == min(
@@ -208,7 +208,7 @@ global_min_avg_temp <- function(start_year = 1750, end_year = 2015){
 }
 
 # 2.3: When is the median average year globally since 1750 and how hot was it?
-global_med_avg_temp <- function(start_year = 1750, end_year = 2015){
+global_med_avg_temp <- function(start_year = 1750, end_year = 2015) {
   median_year <- annual_global_temp %>%
     filter(dt >= start_year & dt <= end_year) %>%
     arrange(desc(LandAverageTemperature))
@@ -223,7 +223,7 @@ global_med_avg_temp <- function(start_year = 1750, end_year = 2015){
 }
 
 # 2.4: What is the average global temperature from 1750 to 2015?
-global_avg_temp <- function(start_year = 1750, end_year = 2015){
+global_avg_temp <- function(start_year = 1750, end_year = 2015) {
   avg_temp <- annual_global_temp %>%
     filter(dt >= start_year & dt <= end_year) %>%
     summarise(
@@ -259,7 +259,7 @@ global_avg_temp <- function(start_year = 1750, end_year = 2015){
 }
 
 # 2.5: Create a table of data from questions 1 and 2
-global_annual_summary <- function(start_year = 1750, end_year = 2015){
+global_annual_summary <- function(start_year = 1750, end_year = 2015) {
   max <- global_max_avg_temp(start_year, end_year)
   min <- global_min_avg_temp(start_year, end_year)
   med <- global_med_avg_temp(start_year, end_year)
@@ -276,7 +276,7 @@ global_annual_summary <- function(start_year = 1750, end_year = 2015){
 }
 
 # 3: How much have land temperatures changed since 1850 by country?
-country_temp_change <- function(start_year = 1850, end_year = 2013){
+country_temp_change <- function(start_year = 1850, end_year = 2013) {
   temp_change <- annual_country_temp %>%
     filter(dt %in% c(start_year, end_year)) %>%
     arrange(dt) %>%
@@ -304,7 +304,7 @@ country_temp_change <- function(start_year = 1850, end_year = 2013){
 
 # 4: What are the min and max values in the country data-set?
 # 4.1: What is the hottest day since 1850 by country? 
-country_max_avg_temp <- function(start_year = 1850, end_year = 2013){
+country_max_avg_temp <- function(start_year = 1850, end_year = 2013) {
   temp_max <- annual_country_temp %>%
     filter(dt %in% c(start_year: end_year)) %>%
     arrange(dt) %>%
@@ -318,7 +318,7 @@ country_max_avg_temp <- function(start_year = 1850, end_year = 2013){
 }
 
 # 4.2: What is the coldest temperature each year per country since 1850?
-country_min_avg_temp <- function(start_year = 1850, end_year = 2013){
+country_min_avg_temp <- function(start_year = 1850, end_year = 2013) {
   temp_min <- annual_country_temp %>%
     filter(dt %in% c(start_year: end_year)) %>%
     arrange(dt) %>%
@@ -332,7 +332,7 @@ country_min_avg_temp <- function(start_year = 1850, end_year = 2013){
 }
 
 # 4.3: What is the mean temperature for each country since 1850?
-country_avg_temp <- function(start_year = 1850, end_year = 2013){
+country_avg_temp <- function(start_year = 1850, end_year = 2013) {
   temp_change <- annual_country_temp %>%
     filter(dt %in% c(start_year: end_year)) %>%
     arrange(dt) %>%
@@ -351,7 +351,7 @@ country_avg_temp <- function(start_year = 1850, end_year = 2013){
 }
 
 # 4.4: Create a table of this data
-country_annual_summary <- function(start_year = 1850, end_year = 2013){
+country_annual_summary <- function(start_year = 1850, end_year = 2013) {
   max <- country_max_avg_temp(start_year, end_year)
   min <- country_min_avg_temp(start_year, end_year)
   avg <- country_avg_temp(start_year, end_year)
@@ -366,7 +366,7 @@ country_annual_summary <- function(start_year = 1850, end_year = 2013){
 }
 
 # 5: How much have land temperatures changed since 1850 by city?
-city_temp_change <- function(start_year = 1850, end_year = 2013){
+city_temp_change <- function(start_year = 1850, end_year = 2013) {
   temp_change <- annual_city_temp %>%
     filter(dt %in% c(start_year, end_year)) %>%
     arrange(dt) %>%
@@ -398,7 +398,7 @@ city_temp_change <- function(start_year = 1850, end_year = 2013){
 
 # 6: What are the min and max values in the city data-set?
 # 6.1: What is the hottest day since 1850 by city?
-city_max_avg_temp <- function(start_year = 1850, end_year = 2013){
+city_max_avg_temp <- function(start_year = 1850, end_year = 2013) {
   temp_max <- annual_city_temp %>%
     filter(dt %in% c(start_year: end_year)) %>%
     arrange(dt) %>%
@@ -412,7 +412,7 @@ city_max_avg_temp <- function(start_year = 1850, end_year = 2013){
 }
 
 # 6.2: What is the coldest average year per city since 1850?
-city_min_avg_temp <- function(start_year = 1850, end_year = 2013){
+city_min_avg_temp <- function(start_year = 1850, end_year = 2013) {
   temp_min <- annual_city_temp %>%
     filter(dt %in% c(start_year: end_year)) %>%
     arrange(dt) %>%
@@ -426,7 +426,7 @@ city_min_avg_temp <- function(start_year = 1850, end_year = 2013){
 }
 
 # 6.3: What is the mean temperature for each city since 1850?
-city_avg_temp <- function(start_year = 1850, end_year = 2013){
+city_avg_temp <- function(start_year = 1850, end_year = 2013) {
   temp_change <- annual_city_temp %>%
     filter(dt %in% c(start_year: end_year)) %>%
     arrange(dt) %>%
@@ -448,7 +448,7 @@ city_avg_temp <- function(start_year = 1850, end_year = 2013){
 }
 
 # 6.4: Create a table of this data
-city_annual_summary <- function(start_year = 1850, end_year = 2013){
+city_annual_summary <- function(start_year = 1850, end_year = 2013) {
   max <- city_max_avg_temp(start_year, end_year)
   min <- city_min_avg_temp(start_year, end_year)
   avg <- city_avg_temp(start_year, end_year)
