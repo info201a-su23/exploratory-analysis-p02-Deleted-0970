@@ -372,7 +372,6 @@ city_temp_change <- function(start_year = 1850, end_year = 2013) {
     arrange(dt) %>%
     group_by(Country, City) %>%
     mutate(
-      dt = paste(start_year, "-", end_year),
       event_type = "chg_temp",
       AverageTemperature = ifelse(
         all(!is.na(AverageTemperature)),
@@ -432,7 +431,7 @@ city_avg_temp <- function(start_year = 1850, end_year = 2013) {
     arrange(dt) %>%
     group_by(Country, City) %>%
     summarize(
-      dt = paste(start_year, "-", end_year),
+      dt,
       event_type = "avg_temp",
       AverageTemperature = mean(AverageTemperature, na.rm = TRUE),
       AverageTemperatureUncertainty = mean(AverageTemperatureUncertainty,
@@ -460,6 +459,10 @@ city_annual_summary <- function(start_year = 1850, end_year = 2013) {
     full_join(chg) %>%
     arrange(desc(dt)) %>%
     mutate(
+      dt = ifelse(
+        event_type == "chg_temp" | event_type == "avg_temp", 
+        paste(start_year, "-", end_year), dt
+      ),
       AverageTemperature = ifelse(
         is.nan(AverageTemperature), NA, AverageTemperature
       ),
